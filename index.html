@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Product Comparison</title>
+<link rel="manifest" href="/manifest.json"> <meta property="og:title" content="Investment Product Comparison Tool">
+    <link rel="stylesheet" href="style.css"
+    <meta property="og:title" content="Investment Product Comparison Tool">
+    <meta property="og:description" content="Compare investment products and interest rates from SML Finance, Vanchinad Finance, and Sangeeth Nidhi.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="YOUR_WEBSITE_URL_HERE">
+    <meta property="og:image" content="https://example.com/your-investment-image.jpg">
+    <meta property="og:image:alt" content="Financial products comparison dashboard">
+    <meta property="og:site_name" content="Investment Comparator">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investment Product Comparison Tool">
+    <meta name="twitter:description" content="Compare investment products and interest rates from SML Finance, Vanchinad Finance, and Sangeeth Nidhi.">
+    <meta name="twitter:image" content="https://example.com/your-investment-image.jpg"> <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Investment Product Comparison</h1>
+        <p>Explore and compare investment options from various financial institutions.</p>
+    </header>
+
+    <main class="container">
+        <section class="controls">
+            <div class="control-group">
+                <label for="company-select">Select Company:</label>
+                <select id="company-select">
+                    <option value="">-- Please select a company --</option>
+                    <option value="SML Finance Ltd">SML Finance Ltd</option>
+                    <option value="Vanchinad Finance (P) Ltd">Vanchinad Finance (P) Ltd</option>
+                    <option value="SANGEETH NIDHI">SANGEETH NIDHI</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="product-select">Select Product:</label>
+                <select id="product-select" disabled>
+                    <option value="">-- Select a company first --</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="display-area">
+            <h2 id="selected-company-name"></h2>
+            <h3 id="selected-product-name"></h3>
+            <div id="product-details" class="product-details-grid">
+                <p class="placeholder-text">Select a company and a product to view details.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Investment Comparator. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
