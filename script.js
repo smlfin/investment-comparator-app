@@ -1,5 +1,5 @@
 // Increment CACHE_NAME for Service Worker update to force fresh load of ALL files
-const CACHE_NAME = 'investment-comparator-v17'; // NEW VERSION (Calculator logic fix, Download content & placement, Data text updates)
+const CACHE_NAME = 'investment-comparator-v18'; // NEW VERSION (Calculator logic fix, Download content & placement, Data text updates)
 const urlsToCache = [
   './',
   './index.html',
