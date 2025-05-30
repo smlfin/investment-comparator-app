@@ -3,7 +3,7 @@
   "short_name": "InvComp",
   "description": "Compare investment products and interest rates from various financial institutions.",
   "start_url": "./index.html",
-  "display": "fullscreen",  <-- CHANGE THIS LINE
+  "display": "standalone",
   "background_color": "#f4f7f6",
   "theme_color": "#0056b3",
   "icons": [

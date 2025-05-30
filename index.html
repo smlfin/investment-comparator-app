@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment Product Comparison</title>
-<link rel="manifest" href="/manifest.json"> <meta property="og:title" content="Investment Product Comparison Tool">
-    <link rel="stylesheet" href="style.css"
+    <title>Investment Product Dashboard</title>
+
+    <link rel="manifest" href="/manifest.json">
+
     <meta property="og:title" content="Investment Product Comparison Tool">
-    <meta property="og:description" content="Compare investment products and interest rates from SML Finance, Vanchinad Finance, and Sangeeth Nidhi.">
+    <meta property="og:description" content="Compare investment products and interest rates from SML Finance, Vanchinad Finance, and Sangeeth Nidhi with an interactive calculator.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="YOUR_WEBSITE_URL_HERE">
     <meta property="og:image" content="https://example.com/your-investment-image.jpg">
-    <meta property="og:image:alt" content="Financial products comparison dashboard">
+    <meta property="og:image:alt" content="Financial products comparison dashboard with calculator">
     <meta property="og:site_name" content="Investment Comparator">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Investment Product Comparison Tool">
-    <meta name="twitter:description" content="Compare investment products and interest rates from SML Finance, Vanchinad Finance, and Sangeeth Nidhi.">
-    <meta name="twitter:image" content="https://example.com/your-investment-image.jpg"> <link rel="stylesheet" href="style.css">
+    <meta name="twitter:description" content="Compare investment products and interest rates from SML Finance, Vanchinad Finance, and Sangeeth Nidhi with an interactive calculator.">
+    <meta name="twitter:image" content="https://example.com/your-investment-image.jpg">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Investment Product Comparison</h1>
-        <p>Explore and compare investment options from various financial institutions.</p>
+        <h1>Investment Product Dashboard</h1>
+        <p>Explore investment products, interest rates, and calculate returns.</p>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#calculator-area">Go to Calculator</a></li>
+                <li><a href="#" id="openDownloadModal">Download Reports</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main class="container">
@@ -52,11 +61,51 @@
                 <p class="placeholder-text">Select a company and a product to view details.</p>
             </div>
         </section>
+
+        <section class="calculator-area" id="calculator-area">
+            <h2>Investment Calculator</h2>
+            <div class="calculator-controls">
+                <div class="control-group">
+                    <label for="investment-amount">Investment Amount (₹):</label>
+                    <input type="number" id="investment-amount" placeholder="e.g., 10000" min="0">
+                    <p id="amount-guidance" class="amount-guidance-message"></p>
+                </div>
+            </div>
+
+            <div id="calculator-results" class="calculator-results-grid">
+                <p class="placeholder-text">Enter an amount and select a product option above to calculate returns.</p>
+                <div id="calc-download-buttons" class="calc-download-buttons"></div>
+            </div>
+        </section>
     </main>
 
     <footer>
         <p>&copy; 2025 Investment Comparator. All rights reserved.</p>
     </footer>
+
+    <div id="download-modal" class="download-modal-overlay">
+        <div class="download-modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Download Options</h2>
+            <p id="modal-download-prompt">Select a company or product to enable download options.</p>
+            <div class="download-buttons-modal">
+                <h3>Company-wise Downloads</h3>
+                <button id="downloadCompanyPdfBtn" class="action-button" disabled>All Products PDF</button>
+                <button id="downloadCompanyExcelBtn" class="action-button" disabled>All Products Excel</button>
+                <hr>
+                <h3>Product-wise Downloads (Current View)</h3>
+                <button id="downloadProductPdfBtn" class="action-button" disabled>Product Details PDF</button>
+                <button id="downloadProductImageBtn" class="action-button" disabled>Product Details Image</button>
+                <button id="downloadProductExcelBtn" class="action-button" disabled>Product Details Excel</button>
+            </div>
+            <div id="modal-download-message" class="download-message"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.1/dist/html-to-image.min.js"></script>
 
     <script src="script.js"></script>
 </body>

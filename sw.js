@@ -1,4 +1,4 @@
-const CACHE_NAME = 'investment-comparator-v2';
+const CACHE_NAME = 'investment-comparator-v17'; // NEW VERSION (must match script.js)
 const urlsToCache = [
   './',
   './index.html',
@@ -13,7 +13,12 @@ const urlsToCache = [
   './icons/icon-152x152.png',
   './icons/icon-192x192.png',
   './icons/icon-384x384.png',
-  './icons/icon-512x512.png'
+  './icons/icon-512x512.png',
+  // Add CDN paths for cached offline use
+  'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
+  'https://cdn.jsdelivr.net/npm/html-to-image@1.11.1/dist/html-to-image.min.js'
 ];
 
 // Install event: caches all the necessary assets
@@ -23,6 +28,9 @@ self.addEventListener('install', (event) => {
       .then((cache) => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
+      })
+      .catch((error) => {
+          console.error('Failed to cache during install:', error);
       })
       .then(() => self.skipWaiting()) // Activates the service worker immediately
   );
@@ -78,7 +86,11 @@ self.addEventListener('fetch', (event) => {
 
             return networkResponse;
           }
-        );
+        ).catch((error) => {
+            console.error('Fetch failed:', error);
+            // You could return an offline page here if desired
+            return new Response('<h1>Network Error</h1><p>Please check your internet connection.</p>', { headers: { 'Content-Type': 'text/html' }, status: 503, statusText: 'Service Unavailable' });
+        });
       })
   );
 });
