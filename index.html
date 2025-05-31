@@ -29,7 +29,14 @@
         <nav class="main-nav">
             <ul>
                 <li><a href="#calculator-area">Go to Calculator</a></li>
-                <li><a href="#" id="openDownloadModal">Download Reports</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Download Product Details <span class="dropdown-arrow"></span></a>
+                    <div class="dropdown-content">
+                        <a href="images/sml.jpeg" download="SML_Product_Details.jpeg">SML Finance Ltd</a>
+                        <a href="images/vfl.jpeg" download="Vanchinad_Finance_Details.jpeg">Vanchinad Finance (P) Ltd</a>
+                        <a href="images/snl.jpeg" download="Sangeeth_Nidhi_Details.jpeg">SANGEETH NIDHI</a>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -68,44 +75,18 @@
                 <div class="control-group">
                     <label for="investment-amount">Investment Amount (₹):</label>
                     <input type="number" id="investment-amount" placeholder="e.g., 10000" min="0">
-                    <p id="amount-guidance" class="amount-guidance-message"></p>
                 </div>
             </div>
 
             <div id="calculator-results" class="calculator-results-grid">
                 <p class="placeholder-text">Enter an amount and select a product option above to calculate returns.</p>
-                <div id="calc-download-buttons" class="calc-download-buttons"></div>
             </div>
         </section>
-    </main>
+        </main>
 
     <footer>
         <p>&copy; 2025 Investment Comparator. All rights reserved.</p>
     </footer>
-
-    <div id="download-modal" class="download-modal-overlay">
-        <div class="download-modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Download Options</h2>
-            <p id="modal-download-prompt">Select a company or product to enable download options.</p>
-            <div class="download-buttons-modal">
-                <h3>Company-wise Downloads</h3>
-                <button id="downloadCompanyPdfBtn" class="action-button" disabled>All Products PDF</button>
-                <button id="downloadCompanyExcelBtn" class="action-button" disabled>All Products Excel</button>
-                <hr>
-                <h3>Product-wise Downloads (Current View)</h3>
-                <button id="downloadProductPdfBtn" class="action-button" disabled>Product Details PDF</button>
-                <button id="downloadProductImageBtn" class="action-button" disabled>Product Details Image</button>
-                <button id="downloadProductExcelBtn" class="action-button" disabled>Product Details Excel</button>
-            </div>
-            <div id="modal-download-message" class="download-message"></div>
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.1/dist/html-to-image.min.js"></script>
 
     <script src="script.js"></script>
 </body>

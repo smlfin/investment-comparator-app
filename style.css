@@ -6,6 +6,8 @@
     --text-color: #333;
     --border-color: #ddd;
     --hover-color: #e9ecef;
+    --dropdown-bg: #f9f9f9; /* Light background for dropdown items */
+    --dropdown-hover: #ddd; /* Hover for dropdown items */
 }
 
 body {
@@ -36,7 +38,7 @@ header p {
     margin-top: 0.5rem;
 }
 
-/* Navigation for Calculator Link & Download Reports */
+/* Navigation */
 .main-nav {
     margin-top: 1rem;
 }
@@ -45,13 +47,14 @@ header p {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+    display: flex; /* Arrange links horizontally */
+    justify-content: center; /* Center the links */
+    gap: 1rem; /* Space between links */
 }
 
 .main-nav li {
-    display: inline-block;
+    /* No specific display for li needed due to flex on ul */
+    position: relative; /* CRITICAL: Needed for dropdown positioning */
 }
 
 .main-nav a {
@@ -62,10 +65,88 @@ header p {
     border-radius: 5px;
     transition: background-color 0.3s ease;
     font-weight: bold;
+    display: block; /* Make the whole area clickable for dropdown button */
+    /* Ensure default `a` styles don't interfere with dropdown links later */
 }
 
 .main-nav a:hover {
-    background-color: #0069d9; /* Slightly darker secondary */
+    background-color: #0056a3; /* Slightly darker secondary */
+}
+
+/* Dropdown specific styles */
+.dropdown {
+    position: relative; /* Essential for positioning its children */
+    display: inline-block; /* Allows the dropdown to sit inline with other nav items */
+}
+
+.dropbtn {
+    /* Styles specifically for the main dropdown button */
+    color: white;
+    padding: 0.5rem 1rem;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap; /* Prevent text from wrapping on the button */
+    display: inline-flex; /* Use inline-flex to align arrow with text */
+    align-items: center; /* Vertically center content */
+    gap: 8px; /* Space between text and arrow */
+}
+
+.dropbtn:hover {
+    background-color: #0056a3;
+}
+
+.dropdown-arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white; /* White arrow pointing down */
+    vertical-align: middle;
+    transition: transform 0.2s ease; /* Smooth rotation for arrow */
+}
+
+/* Rotate arrow when dropdown is open */
+.dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: var(--dropdown-bg); /* Light background for dropdown */
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1; /* Ensure it appears above other content */
+    border-radius: 5px;
+    overflow: hidden; /* Ensures border-radius applies to contents */
+    top: 100%; /* Position below the button */
+    left: 50%;
+    transform: translateX(-50%); /* Center the dropdown horizontally relative to its parent */
+    margin-top: 5px; /* Small gap below button */
+}
+
+.dropdown-content a {
+    color: var(--text-color); /* Darker text for dropdown items */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: transparent; /* Reset background from main-nav a */
+    font-weight: normal; /* Reset font weight */
+    border-radius: 0; /* Remove border-radius from individual items */
+    text-align: left; /* Align text left within dropdown */
+}
+
+.dropdown-content a:hover {
+    background-color: var(--dropdown-hover); /* Hover effect for dropdown items */
+    color: var(--primary-color); /* Change text color on hover */
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 
@@ -80,7 +161,7 @@ header p {
 
 .controls, .display-area, .calculator-area { /* Apply consistent base styles */
     background-color: var(--card-background);
-    padding: 1.5rem 2rem; /* Adjusted padding for better visual */
+    padding: 1.5rem 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
@@ -111,7 +192,7 @@ select, input[type="number"] {
     border-radius: 5px;
     font-size: 1rem;
     background-color: white;
-    cursor: pointer; /* Apply cursor to input as well */
+    cursor: pointer;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -121,7 +202,7 @@ select:focus, input[type="number"]:focus {
     outline: none;
 }
 
-select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:disabled */
+select:disabled {
     background-color: var(--hover-color);
     cursor: not-allowed;
     color: #666;
@@ -158,7 +239,7 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
     text-align: left;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    position: relative; /* Needed for radio button styling */
+    position: relative;
 }
 
 .product-card:hover {
@@ -197,15 +278,15 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
     top: 10px;
     right: 10px;
     cursor: pointer;
-    width: 24px; /* Size of the custom radio button */
+    width: 24px;
     height: 24px;
-    appearance: none; /* Hide default radio button */
+    appearance: none;
     -webkit-appearance: none;
     border: 2px solid var(--primary-color);
     border-radius: 50%;
     outline: none;
     transition: background-color 0.2s ease, border-color 0.2s ease;
-    z-index: 10; /* Ensure it's above other content */
+    z-index: 10;
 }
 
 .product-option-select:checked {
@@ -227,22 +308,21 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
 }
 
 
-/* Specific styles for NCD closure table */
-/* Styles for tables within Product Details - Smaller size */
-.product-details-grid .closure-table { /* Targeting the table inside the product details grid */
+/* Specific styles for NCD closure table within Product Details cards */
+.product-details-grid .closure-table {
     width: 100%;
-    max-width: 220px; /* Make it smaller than 300px to fit well without scrolling */
-    margin: 1rem auto; /* Center it */
+    max-width: 220px;
+    margin: 1rem auto;
     border-collapse: collapse;
-    font-size: 0.75em; /* Even smaller font to help fit content */
+    font-size: 0.75em;
 }
 
 .product-details-grid .closure-table th,
 .product-details-grid .closure-table td {
     border: 1px solid var(--border-color);
-    padding: 0.4rem; /* Reduced padding */
+    padding: 0.4rem;
     text-align: left;
-    white-space: normal; /* Allow text to wrap for smaller cells */
+    white-space: normal;
 }
 
 .product-details-grid .closure-table th {
@@ -260,10 +340,9 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
 }
 
 
-/* Styles for Calculator Table (as it was, assuming it's fine) */
-/* The calculator section no longer displays this table directly, but it might be reused */
-.calculator-results-grid .closure-table { /* Targeting the table inside the calculator results grid */
-    width: 100%; /* Keep 100% width for calculator table */
+/* Styles for Calculator Table */
+.calculator-results-grid .closure-table {
+    width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
     font-size: 0.9em;
@@ -274,7 +353,7 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
     border: 1px solid var(--border-color);
     padding: 0.8rem;
     text-align: left;
-    white-space: normal; /* Allow normal wrapping */
+    white-space: normal;
 }
 
 .calculator-results-grid .closure-table th {
@@ -294,32 +373,24 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
 
 .general-remark {
     font-size: 0.95em;
-    color: #d9534f; /* A reddish color for emphasis */
+    color: #d9534f;
     margin-top: 1rem;
     font-weight: bold;
 }
 
 /* Style for the "No NCD" message */
 .no-ncd-message {
-    background-color: #ffe0b2; /* Light orange background */
-    color: #e65100; /* Dark orange text */
+    background-color: #ffe0b2;
+    color: #e65100;
     padding: 1rem;
     border-radius: 8px;
     margin: 1.5rem auto;
     font-weight: bold;
     font-size: 1.1em;
-    border: 1px solid #ff9800; /* Orange border */
+    border: 1px solid #ff9800;
     text-align: center;
 }
 
-/* Amount Guidance Message */
-.amount-guidance-message {
-    font-size: 0.9em;
-    color: var(--secondary-color); /* Secondary color for guidance */
-    margin-top: 0.5rem;
-    min-height: 1.2em; /* Reserve space to prevent layout shift */
-    font-style: italic;
-}
 
 /* Calculator specific styles */
 .calculator-controls {
@@ -335,11 +406,10 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
 
 .calculator-results-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Min width for results */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1rem;
     margin-top: 1rem;
     text-align: left;
-    position: relative; /* To position calc download buttons */
 }
 
 .calculator-result-card {
@@ -367,244 +437,6 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
     font-size: 1.1em;
 }
 
-/* NEW: Calculator-specific download buttons */
-.calc-download-buttons {
-    display: flex;
-    justify-content: center; /* Center buttons horizontally */
-    gap: 10px;
-    margin-top: 1rem; /* Space from calculator results */
-    flex-wrap: wrap; /* Allow wrapping on small screens */
-    width: 100%; /* Take full width of its parent */
-    /* Position absolutely to be "next to" results on wider screens if desired,
-       but for general use, within the flow is fine. */
-}
-.calc-download-buttons .action-button {
-    padding: 0.6rem 1.2rem; /* Slightly smaller buttons for calculator */
-    font-size: 0.9em;
-}
-
-
-/* NEW: Download Modal Styles */
-.download-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    visibility: hidden; /* Hidden by default */
-    opacity: 0;
-    transition: visibility 0.3s, opacity 0.3s;
-}
-
-.download-modal-overlay.active {
-    visibility: visible;
-    opacity: 1;
-}
-
-.download-modal-content {
-    background-color: var(--card-background);
-    padding: 2.5rem;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-    text-align: center;
-    transform: translateY(-20px);
-    transition: transform 0.3s ease-out;
-}
-
-.download-modal-overlay.active .download-modal-content {
-    transform: translateY(0);
-}
-
-.download-modal-content h2 {
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 1rem;
-}
-
-.download-modal-content p#modal-download-prompt {
-    font-style: italic;
-    color: #555;
-    margin-bottom: 1.5rem;
-}
-
-.download-modal-content .close-button {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 2em;
-    cursor: pointer;
-    color: #888;
-    transition: color 0.2s;
-}
-
-.download-modal-content .close-button:hover {
-    color: #333;
-}
-
-.download-buttons-modal {
-    display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    gap: 10px;
-    margin-top: 1.5rem;
-}
-
-.download-buttons-modal h3 {
-    color: var(--secondary-color);
-    margin-top: 1.5rem;
-    margin-bottom: 0.8rem;
-    font-size: 1.2em;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 5px;
-}
-
-.download-buttons-modal .action-button {
-    width: 100%; /* Full width in modal */
-    padding: 0.8rem 1rem;
-}
-
-/* General button styles (already existing, but reiterating for clarity) */
-.action-button {
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    flex-shrink: 0;
-}
-
-.action-button:hover:not(:disabled) {
-    background-color: #0069d9;
-    transform: translateY(-2px);
-}
-
-.action-button:active:not(:disabled) {
-    transform: translateY(0);
-}
-
-.action-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.download-message {
-    margin-top: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-/* NEW: Styles for the generated report content (to be applied to the hidden div) */
-/* These styles aim for a clean, print-friendly look in PDF/Image */
-.report-container {
-    padding: 20px;
-    background-color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    font-size: 12px;
-    box-sizing: border-box;
-    width: 794px; /* A4 width at 96dpi for consistency */
-}
-
-.report-container h1 {
-    color: #0056b3;
-    text-align: center;
-    font-size: 28px; /* Slightly larger for main title */
-    margin-bottom: 10px;
-}
-
-.report-container h2 {
-    color: #0056b3;
-    font-size: 20px;
-    margin-top: 25px;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #0056b3;
-    padding-bottom: 5px;
-}
-
-.report-container h3 {
-    color: #007bff;
-    font-size: 18px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #007bff;
-    padding-bottom: 5px;
-}
-
-.report-container h4 {
-    color: #0056b3;
-    font-size: 16px;
-    margin-top: 15px;
-    margin-bottom: 8px;
-}
-
-.report-container p {
-    margin: 5px 0;
-    font-size: 12px;
-}
-
-.report-container p strong {
-    color: #0056b3;
-}
-
-.report-container .report-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-    background-color: #f4f7f6;
-}
-
-.report-container .report-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    font-size: 11px; /* Smaller font for tables to fit */
-}
-
-.report-container .report-table th,
-.report-container .report-table td {
-    border: 1px solid #ddd;
-    padding: 6px; /* Reduced padding */
-    text-align: left;
-    white-space: normal;
-}
-
-.report-container .report-table th {
-    background-color: #0056b3;
-    color: white;
-    font-weight: bold;
-}
-
-.report-container .report-table tbody tr:nth-child(even) {
-    background-color: #e9ecef; /* Lighter hover color for print */
-}
-
-.report-container .general-remark {
-    font-size: 11px;
-    color: #d9534f;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-.report-container hr {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    margin: 20px 0;
-}
-
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .container {
@@ -612,7 +444,7 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
     }
 
     .controls, .display-area, .calculator-area {
-        padding: 1rem; /* Slightly reduced padding on mobile */
+        padding: 1rem;
     }
 
     .controls {
@@ -626,34 +458,18 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
     }
 
     .product-details-grid {
-        grid-template-columns: 1fr; /* Stack product cards on mobile */
+        grid-template-columns: 1fr;
     }
 
     header h1 {
         font-size: 2rem;
     }
 
-    .main-nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .main-nav li {
-        width: 100%;
-    }
-
-    .main-nav a {
-        display: block;
-        width: 100%;
-        text-align: center;
-    }
-
-
     /* Table responsiveness for smaller screens */
-    .product-details-grid .closure-table { /* Target the table inside the product details grid */
-        max-width: 100%; /* Allow it to shrink fully on small screens */
-        font-size: 0.7em; /* Smallest font to try fit content */
-        padding: 0.3rem; /* Smallest padding */
+    .product-details-grid .closure-table {
+        max-width: 100%;
+        font-size: 0.7em;
+        padding: 0.3rem;
     }
 
     /* Ensure calculator results stack */
@@ -661,17 +477,36 @@ select:disabled, input[type="number"]:disabled { /* Added input[type="number"]:d
         grid-template-columns: 1fr;
     }
 
-    /* Modal responsiveness */
-    .download-modal-content {
-        width: 95%;
-        padding: 1.5rem;
+    /* Mobile navigation adjustments */
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
     }
 
-    .download-buttons-modal .action-button {
+    .main-nav li {
         width: 100%;
     }
 
-    .calc-download-buttons {
-        flex-direction: column; /* Stack calculator download buttons vertically */
+    .main-nav a {
+        width: calc(100% - 2rem); /* Account for padding */
+        text-align: center;
+    }
+
+    .dropdown-content {
+        position: static; /* Stack dropdown items normally on mobile */
+        transform: none;
+        box-shadow: none;
+        border-radius: 0;
+        margin-top: 0;
+        min-width: unset;
+    }
+    .dropdown-content a {
+        background-color: rgba(0, 0, 0, 0.1); /* Slight background for mobile dropdown items */
+        margin: 0 1rem; /* Indent slightly */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator */
+    }
+    .dropdown-content a:last-child {
+        border-bottom: none;
     }
 }
