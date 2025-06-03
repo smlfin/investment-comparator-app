@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Product Dashboard</title>
+
+    <link rel="manifest" href="/manifest.json">
+
+    <meta property="og:title" content="Investment Product Comparison Tool">
+    <meta property="og:description" content="Compare investment products and interest rates from SML Finance, Vanchinad Finance, and Sangeeth Nidhi with an interactive calculator.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="YOUR_WEBSITE_URL_HERE">
+    <meta property="og:image" content="https://example.com/your-investment-image.jpg">
+    <meta property="og:image:alt" content="Financial products comparison dashboard with calculator">
+    <meta property="og:site_name" content="Investment Comparator">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investment Product Comparison Tool">
+    <meta name="twitter:description" content="Compare investment products and interest rates from SML Finance, Vanchinad Finance, and Sangeeth Nidhi with an interactive calculator.">
+    <meta name="twitter:image" content="https://example.com/your-investment-image.jpg">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Investment Product Dashboard</h1>
+        <p>Explore investment products, interest rates, and calculate returns.</p>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#calculator-area" id="go-to-calculator-link">Go to Calculator</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Download Product Details <span class="dropdown-arrow"></span></a>
+                    <div class="dropdown-content">
+                        <a href="images/sml.jpeg" download="SML_Product_Details.jpeg">SML Finance Ltd</a>
+                        <a href="images/vfl.jpeg" download="Vanchinad_Finance_Details.jpeg">Vanchinad Finance (P) Ltd</a>
+                        <a href="images/snl.jpeg" download="SANGEETH NIDHI">SANGEETH NIDHI</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="controls">
+            <div class="control-group">
+                <label for="company-select">Select Company:</label>
+                <select id="company-select">
+                    <option value="">-- Please select a company --</option>
+                    <option value="SML Finance Ltd">SML Finance Ltd</option>
+                    <option value="Vanchinad Finance (P) Ltd">Vanchinad Finance (P) Ltd</option>
+                    <option value="SANGEETH NIDHI">SANGEETH NIDHI</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="product-select">Select Product Type:</label>
+                <select id="product-select" disabled>
+                    <option value="">-- Select a company first --</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="all-options-view" class="display-area">
+            <h2 id="selected-company-name-all"></h2>
+            <h3 id="selected-product-name-all"></h3>
+            <div id="product-options-grid" class="product-details-grid">
+                <p class="placeholder-text">Select a company and a product type to view available options.</p>
+            </div>
+        </section>
+
+        <section id="single-option-calculator-view" class="display-area hidden">
+            <h2 id="selected-company-name-single"></h2>
+            <h3 id="selected-product-name-single"></h3>
+
+            <div id="selected-product-detail-card" class="product-card">
+                </div>
+
+            <button id="change-option-button" class="action-button">Change Option</button>
+
+            <section class="calculator-area" id="calculator-area">
+                <h2>Investment Calculator</h2>
+                <div class="calculator-controls">
+                    <div class="control-group">
+                        <label for="investment-amount">Investment Amount (₹):</label>
+                        <input type="number" id="investment-amount" placeholder="e.g., 10000" min="0">
+                    </div>
+                </div>
+
+                <div id="calculator-results" class="calculator-results-grid">
+                    <p class="placeholder-text">Enter an amount and select a product option above to calculate returns.</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Investment Comparator. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
