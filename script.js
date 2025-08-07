@@ -1,67 +1,71 @@
 // Increment CACHE_NAME for Service Worker update to force fresh load of ALL files
-const CACHE_NAME = 'investment-comparator-v21'; // NEW VERSION (Sangeeth Nidhi period data corrected)
+const CACHE_NAME = 'investment-comparator-v48'; // NEW VERSION
 const urlsToCache = [
-  './',
-  './index.html',
-  './style.css',
-  './script.js',
-  './manifest.json',
-  // Add your icon paths here:
-  './icons/icon-72x72.png',
-  './icons/icon-96x96.png',
-  './icons/icon-128x128.png',
-  './icons/icon-144x144.png',
-  './icons/icon-152x152.png',
-  './icons/icon-192x192.png',
-  './icons/icon-384x384.png',
-  './icons/icon-512x512.png',
-  // Add image paths for service worker cache
-  './images/sml.jpeg',
-  './images/vfl.jpeg',
-  './images/snl.jpeg'
+    './',
+    './index.html',
+    './style.css',
+    './script.js',
+    './manifest.json',
+    // Add your icon paths here:
+    './icons/icon-72x72.png',
+    './icons/icon-96x96.png',
+    './icons/icon-128x128.png',
+    './icons/icon-144x144.png',
+    './icons/icon-152x152.png',
+    './icons/icon-192x192.png',
+    './icons/icon-384x384.png',
+    './icons/icon-512x512.png',
+    // Add image paths for service worker cache (still cache them if they exist as files, but won't display)
+    './images/sml.jpeg',
+    './images/vfl.jpeg',
+    './images/snl.jpeg',
+    './images/default.jpeg' // Ensure default image is cached
 ];
 
 // Service Worker Registration
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('Service Worker registered with scope:', registration.scope);
-      })
-      .catch((error) => {
-        console.error('Service Worker registration failed:', error);
-      });
-  });
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch((error) => {
+                console.error('Service Worker registration failed:', error);
+            });
+    });
 }
 
 const investmentData = {
     "SML Finance Ltd": {
         "SD 5.5 Year": [
-            { "monthly": "12.5%", "yearly": "13.0%", "period": "5.5 YEARS", "remarks": "5000 to less than 5 Lakhs", "generalRemark": "No Premature Closing Allowed" },
-            { "monthly": "13.0%", "yearly": "13.5%", "period": "5.5 YEARS", "remarks": "5 Lakhs to less than 25 Lakhs", "generalRemark": "No Premature Closing Allowed" },
-            { "monthly": "14.0%", "yearly": "14.5%", "period": "5.5 YEARS", "remarks": "25 Lakhs & above", "generalRemark": "No Premature Closing Allowed" }
+            { "id": "sml-sd-1", "monthly": "12.5%", "yearly": "13.0%", "period": "5.5 YEARS", "remarks": "5000 to less than 5 Lakhs", "generalRemark": "No Premature Closing Allowed", "image": "./images/sml.jpeg" },
+            { "id": "sml-sd-2", "monthly": "13.0%", "yearly": "13.5%", "period": "5.5 YEARS", "remarks": "5 Lakhs to less than 25 Lakhs", "generalRemark": "No Premature Closing Allowed", "image": "./images/sml.jpeg" },
+            { "id": "sml-sd-3", "monthly": "14.0%", "yearly": "14.5%", "period": "5.5 YEARS", "remarks": "25 Lakhs & above", "generalRemark": "No Premature Closing Allowed", "image": "./images/sml.jpeg" }
         ],
         "Doubling Scheme": [
-            { "period": "6 YEARS", "remarks": "5000 & Above", "doublingRemark": "Doubles on maturity.", "generalRemark": "No Premature Closing Allowed" }
+            { "id": "sml-doubling-1", "period": "6 YEARS", "remarks": "5000 & Above", "doublingRemark": "Doubles on maturity.", "generalRemark": "No Premature Closing Allowed", "image": "./images/sml.jpeg" }
         ],
         "Non-Convertible Debentures (NCD)": [
             {
+                "id": "sml-ncd-1",
                 "monthly": "12.5%",
                 "yearly": "Not Available",
-                "period": "10 YEARS",
-                "remarks": "3 Lakhs to less than 15 Lakhs",
+                "period": "1-10 Years", // Simplified for dropdown
+                "remarks": "2 Lakhs to less than 15 Lakhs",
                 "closureRemark": "Closure allowed after 1 year.",
                 "closureTerms": [
                     { "period": "Between 1 & 2 year", "cut": "1%" },
                     { "period": "Between 2 & 3 year", "cut": ".50%" },
                     { "period": "After 3 year", "cut": "No cut" },
                     { "period": "If closed after 3 years & between 2 Anniversary Years", "cut": "Effective Rate: 9%" }
-                ]
+                ],
+                "image": "./images/sml.jpeg"
             },
             {
+                "id": "sml-ncd-2",
                 "monthly": "13%",
                 "yearly": "Not Available",
-                "period": "10 YEARS",
+                "period": "1-10 Years", // Simplified for dropdown
                 "remarks": "15 Lakhs & above",
                 "closureRemark": "Closure allowed after 1 year.",
                 "closureTerms": [
@@ -69,24 +73,26 @@ const investmentData = {
                     { "period": "Between 2 & 3 year", "cut": ".50%" },
                     { "period": "After 3 year", "cut": "No cut" },
                     { "period": "If closed after 3 years & between 2 Anniversary Years", "cut": "Effective Rate: 9%" }
-                ]
+                ],
+                "image": "./images/sml.jpeg"
             }
         ]
     },
     "Vanchinad Finance (P) Ltd": {
         "SD 5.5 Year": [
-            { "monthly": "12.5%", "yearly": "13.0%", "period": "5.5 YEARS", "remarks": "5000 to less than 5 Lakhs", "generalRemark": "No Premature Closing Allowed" },
-            { "monthly": "13.0%", "yearly": "13.5%", "period": "5.5 YEARS", "remarks": "5 Lakhs to less than 25 Lakhs", "generalRemark": "No Premature Closing Allowed" },
-            { "monthly": "14.0%", "yearly": "14.5%", "period": "5.5 YEARS", "remarks": "25 Lakhs & above", "generalRemark": "No Premature Closing Allowed" }
+            { "id": "vfl-sd-1", "monthly": "12%", "yearly": "12.50%", "period": "5.5 YEARS", "remarks": "5000 to less than 5 Lakhs", "generalRemark": "No Premature Closing Allowed", "image": "./images/vfl.jpeg" },
+            { "id": "vfl-sd-2", "monthly": "12.50%", "yearly": "13%", "period": "5.5 YEARS", "remarks": "5 Lakhs to less than 25 Lakhs", "generalRemark": "No Premature Closing Allowed", "image": "./images/vfl.jpeg" },
+            { "id": "vfl-sd-3", "monthly": "13.50%", "yearly": "14%", "period": "5.5 YEARS", "remarks": "25 Lakhs & above", "generalRemark": "No Premature Closing Allowed", "image": "./images/vfl.jpeg" }
         ],
         "Sub - ordinated Debt Doubling Scheme": [
-            { "period": "6 YEARS", "remarks": "5000 & Above", "doublingRemark": "Doubles on maturity.", "generalRemark": "No Premature Closing Allowed" }
+            { "id": "vfl-doubling-1", "period": "6 YEARS", "remarks": "5000 & Above", "doublingRemark": "Doubles on maturity.", "generalRemark": "No Premature Closing Allowed", "image": "./images/vfl.jpeg" }
         ],
         "Non-Convertible Debentures (NCD)": [
             {
+                "id": "vfl-ncd-1",
                 "monthly": "12.5%",
                 "yearly": "13.0%",
-                "period": "10 YEARS",
+                "period": "1-10 Years", // Simplified for dropdown
                 "remarks": "5 Lakhs to less than 15 Lakhs",
                 "closureRemark": "Closure allowed after 1 year.",
                 "closureTerms": [
@@ -94,12 +100,14 @@ const investmentData = {
                     { "period": "Between 2 & 3 year", "cut": "1%" },
                     { "period": "After 3 year", "cut": "No cut" },
                     { "period": "If closed after 3 years & between 2 Anniversary Years", "cut": "Effective Rate: 9%" }
-                ]
+                ],
+                "image": "./images/vfl.jpeg"
             },
             {
+                "id": "vfl-ncd-2",
                 "monthly": "13.0%",
                 "yearly": "13.5%",
-                "period": "10 YEARS",
+                "period": "1-10 Years", // Simplified for dropdown
                 "remarks": "15 Laksh & above",
                 "closureRemark": "Closure allowed after 1 year.",
                 "closureTerms": [
@@ -107,17 +115,44 @@ const investmentData = {
                     { "period": "Between 2 & 3 year", "cut": "1%" },
                     { "period": "After 3 year", "cut": "No cut" },
                     { "period": "If closed after 3 years & between 2 Anniversary Years", "cut": "Effective Rate: 9%" }
-                ]
+                ],
+                "image": "./images/vfl.jpeg"
             }
         ]
     },
     "SANGEETH NIDHI": {
         "Sangeeth Nidhi Deposits": [
-            { "period": "6 MONTHS to Less than 1 Year", "yearly": "9%", "remarks": "5000 and above" }, // CORRECTED PERIOD TEXT
-            { "period": "1 Year to 5 Years", "monthly": "12%", "yearly": "12.50%", "remarks": "5000 and above" } // CORRECTED PERIOD TEXT
+            { "id": "snl-fd-1", "period": "6 MONTHS to Less than 1 Year", "yearly": "9%", "remarks": "5000 and above", "generalRemark": "No premature closure.", "image": "./images/snl.jpeg" },
+            {
+                "id": "snl-fd-2",
+                "period": "1 Year to 5 Years",
+                "monthly": "12%",
+                "yearly": "12.50%",
+                "remarks": "5000 and above",
+                "generalRemark": "Premature closure allowed after 1 year.",
+                "closureTerms": [
+                    { "period": "After 1 Year", "cut": "2%" } // New closure term
+                ],
+                "image": "./images/snl.jpeg"
+            }
+        ]
+    },
+    "RD Calculator": {
+        "Recurring Deposit (RD)": [
+            { "id": "rd-calc-1", "period": "1 to 5 Years", "remarks": "Monthly Deposit of ₹1000 and above", "annualRatePercentage": 12.12, "generalRemark": "RD calculations are estimates. The final maturity value is subject to the actual interest rate and deposit schedule.", "image": "./images/default.jpeg" }
         ]
     }
 };
+
+// Hardcoded RD maturity values based on customer feedback for a ₹1000 monthly deposit
+const rdMaturityValues = {
+    1: 12809,
+    2: 27243,
+    3: 43507,
+    4: 61834,
+    5: 82485
+};
+
 
 // DOM Elements
 const companySelect = document.getElementById('company-select');
@@ -127,7 +162,7 @@ const productSelect = document.getElementById('product-select');
 const allOptionsView = document.getElementById('all-options-view');
 const selectedCompanyNameAll = document.getElementById('selected-company-name-all');
 const selectedProductNameAll = document.getElementById('selected-product-name-all');
-const productOptionsGrid = document.getElementById('product-options-grid'); // Renamed from productDetailsDiv
+const productOptionsGrid = document.getElementById('product-options-grid');
 
 // Elements for "Single Option + Calculator" view
 const singleOptionCalculatorView = document.getElementById('single-option-calculator-view');
@@ -137,19 +172,82 @@ const selectedProductDetailCard = document.getElementById('selected-product-deta
 const changeOptionButton = document.getElementById('change-option-button');
 
 const investmentAmountInput = document.getElementById('investment-amount');
+const investmentPeriodInput = document.getElementById('investment-period');
+const periodInputGroup = document.getElementById('period-input-group');
 const calculatorResultsDiv = document.getElementById('calculator-results');
-const goToCalculatorLink = document.getElementById('go-to-calculator-link'); // Get the header link
-
+const goToCalculatorLink = document.getElementById('go-to-calculator-link');
+const calculateButton = document.getElementById('calculate-button');
+const rdMonthlyTransferGroup = document.getElementById('rd-monthly-transfer-group');
+const rdMonthlyTransferPeriodSelect = document.getElementById('rd-monthly-transfer-period');
 
 // Global state variables
-let currentSelectedProductOptions = []; // Stores ALL options for the selected product type
-let currentSelectedProductType = '';    // Stores the product name (e.g., "SD 5.5 Year")
-let currentSelectedDetailForCalc = null; // Stores the specific detail object chosen by radio button
-let currentSelectedDetailIndex = -1; // To keep track of the selected radio button visually
+let currentSelectedProductOptions = [];
+let currentSelectedProductType = '';
+let currentSelectedDetailForCalc = null;
+let currentSelectedDetailIndex = -1;
 
 let allowedMinAmount = 0;
 let allowedMaxAmount = Infinity;
 let specificAmountRequired = false;
+
+// --- Amount Constraint Management ---
+function resetAmountConstraints() {
+    allowedMinAmount = 0;
+    allowedMaxAmount = Infinity;
+    specificAmountRequired = false;
+    investmentAmountInput.classList.remove('invalid-input');
+    investmentAmountInput.placeholder = 'Enter Investment Amount';
+}
+
+function setAmountConstraints(detail) {
+    let min = 0;
+    let max = Infinity;
+    let specific = false;
+    let placeholderText = 'Enter Investment Amount';
+
+    if (detail && detail.remarks) {
+        const remarks = detail.remarks.toLowerCase();
+
+        const aboveMatch = remarks.match(/(\d+)\s*lakhs?\s*&\s*above/);
+        if (aboveMatch) {
+            min = parseFloat(aboveMatch[1]) * 100000;
+            placeholderText = `Enter ₹ ${min.toLocaleString('en-IN')} or more`;
+        } else {
+            const numAboveMatch = remarks.match(/(\d+)\s*and\s*above/);
+            if (numAboveMatch) {
+                min = parseFloat(numAboveMatch[1]);
+                placeholderText = `Enter ₹ ${min.toLocaleString('en-IN')} or more`;
+            }
+        }
+
+        const betweenMatch = remarks.match(/(\d+)\s*lakhs?\s*to\s*less\s*than\s*(\d+)\s*lakhs?/);
+        if (betweenMatch) {
+            min = parseFloat(betweenMatch[1]) * 100000;
+            max = parseFloat(betweenMatch[2]) * 100000 - 1;
+            placeholderText = `Enter between ₹ ${min.toLocaleString('en-IN')} and ₹ ${(max + 1).toLocaleString('en-IN')}`;
+        }
+        const betweenLakhsMatch = remarks.match(/(\d+)\s*laksh\s*to\s*less\s*than\s*(\d+)\s*laksh/); // Typo in data 'laksh'
+        if (betweenLakhsMatch) {
+            min = parseFloat(betweenLakhsMatch[1]) * 100000;
+            max = parseFloat(betweenLakhsMatch[2]) * 100000 - 1;
+            placeholderText = `Enter between ₹ ${min.toLocaleString('en-IN')} and ₹ ${(max + 1).toLocaleString('en-IN')}`;
+        }
+
+        if (companySelect.value === "RD Calculator" && productSelect.value === "Recurring Deposit (RD)") {
+            const rdAmountMatch = remarks.match(/(\d+)\s*and\s*above/);
+            if (rdAmountMatch) {
+                min = parseFloat(rdAmountMatch[1]);
+                max = Infinity;
+                placeholderText = `Enter ₹ ${min.toLocaleString('en-IN')} or more`;
+            }
+        }
+    }
+
+    allowedMinAmount = min;
+    allowedMaxAmount = max;
+    specificAmountRequired = specific;
+    investmentAmountInput.placeholder = placeholderText;
+}
 
 
 // --- UI View Management Functions ---
@@ -157,39 +255,48 @@ let specificAmountRequired = false;
 function showAllOptionsView() {
     singleOptionCalculatorView.classList.add('hidden');
     allOptionsView.classList.remove('hidden');
-    investmentAmountInput.value = ''; // Clear calculator input when changing view
+    investmentAmountInput.value = '';
+    investmentPeriodInput.value = '';
+    rdMonthlyTransferGroup.classList.add('hidden');
     calculatorResultsDiv.innerHTML = '<p class="placeholder-text">Enter an amount and select a product option above to calculate returns.</p>';
-    resetAmountConstraints(); // Reset calculator constraints
-    // Update header company/product names for this view
+    resetAmountConstraints();
     selectedCompanyNameAll.textContent = companySelect.value ? companySelect.value : '';
     selectedProductNameAll.textContent = productSelect.value ? productSelect.value : '';
-    // Scroll to top of the controls/company/product area
     companySelect.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function showSingleOptionCalculatorView() {
     allOptionsView.classList.add('hidden');
     singleOptionCalculatorView.classList.remove('hidden');
-    // Update header company/product names for this view
     selectedCompanyNameSingle.textContent = companySelect.value ? companySelect.value : '';
     selectedProductNameSingle.textContent = productSelect.value ? productSelect.value : '';
-    // Scroll to the top of this new view
     singleOptionCalculatorView.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // --- Data Population and Display Functions ---
 
+// Function to populate the company select dropdown
+function populateCompanySelect() {
+    companySelect.innerHTML = '<option value="">-- Select a company --</option>';
+    for (const companyName in investmentData) {
+        const option = document.createElement('option');
+        option.value = companyName;
+        option.textContent = companyName;
+        companySelect.appendChild(option);
+    }
+}
+
+
 function populateProductSelect(companyName) {
-    productSelect.innerHTML = '<option value="">-- Select a product type --</option>'; // Clarified text
+    productSelect.innerHTML = '<option value="">-- Select a product type --</option>';
     productSelect.disabled = true;
     selectedProductNameAll.textContent = '';
     selectedCompanyNameAll.textContent = companyName ? companyName : '';
     productOptionsGrid.innerHTML = '<p class="placeholder-text">Select a company and a product type to view available options.</p>';
-    
-    // Always show the all-options view when company/product type changes
+
     showAllOptionsView();
     currentSelectedDetailForCalc = null;
-    currentSelectedDetailIndex = -1; // Reset selected index
+    currentSelectedDetailIndex = -1;
     resetAmountConstraints();
 
     if (companyName && investmentData[companyName]) {
@@ -201,6 +308,11 @@ function populateProductSelect(companyName) {
             productSelect.appendChild(option);
         });
         productSelect.disabled = false;
+
+        if (companyName === "RD Calculator" && products.includes("Recurring Deposit (RD)")) {
+            productSelect.value = "Recurring Deposit (RD)";
+            productSelect.dispatchEvent(new Event('change'));
+        }
     }
 }
 
@@ -213,10 +325,11 @@ function displayProductOptions(companyName, productName) {
     currentSelectedProductOptions = [];
     currentSelectedProductType = productName;
     currentSelectedDetailForCalc = null;
-    currentSelectedDetailIndex = -1; // Reset selected index
+    currentSelectedDetailIndex = -1;
     resetAmountConstraints();
-    showAllOptionsView(); // Ensure we are in the all-options view
-
+    showAllOptionsView();
+    
+    // Check for NCD unavailability message
     if (companyName === "Vanchinad Finance (P) Ltd" && productName === "Non-Convertible Debentures (NCD)") {
         productOptionsGrid.innerHTML = `
             <div class="no-ncd-message">
@@ -229,12 +342,17 @@ function displayProductOptions(companyName, productName) {
     if (companyName && productName && investmentData[companyName] && investmentData[companyName][productName]) {
         const detailsArray = investmentData[companyName][productName];
         currentSelectedProductOptions = detailsArray;
+        
+        // Explicitly check for doubling scheme to apply correct logic
+        const isDoublingProduct = productName.toLowerCase().includes('doubling');
 
         detailsArray.forEach((detail, index) => {
             const card = document.createElement('div');
             card.classList.add('product-card');
-            // Add click listener to the entire card
-            card.addEventListener('click', () => handleOptionSelection(index, card));
+            card.setAttribute('data-index', index);
+            card.addEventListener('click', () => {
+                handleOptionSelection(index, card);
+            });
 
             const sanitizedCompanyName = companyName.replace(/[^a-zA-Z0-9]/g, '');
             const sanitizedProductName = productName.replace(/[^a-zA-Z0-9]/g, '');
@@ -243,35 +361,67 @@ function displayProductOptions(companyName, productName) {
 
             let displayLabel = "For Amount:";
             let displayValue = detail.remarks || 'No specific remarks.';
-
-            // Special handling for SANGEETH NIDHI
-            if (companyName === "SANGEETH NIDHI") {
-                displayLabel = "For Period:";
+            
+            if (isDoublingProduct || companyName === "SANGEETH NIDHI" || (companyName === "RD Calculator" && productName === "Recurring Deposit (RD)")) {
+                displayLabel = "For Period/Type:";
                 displayValue = detail.period || 'Not specified';
             } else {
-                // Apply existing remark cleaning only if it's not SANGEETH NIDHI
                 displayValue = displayValue.replace(/^(Between\s|between\s)/, '');
                 displayValue = displayValue.replace(/\sbetween\s/ig, ' ');
                 displayValue = displayValue.trim();
             }
 
             let cardContent = `
-                <input type="radio" class="product-option-select" name="${radioGroupName}" id="${radioId}" value="${index}" ${currentSelectedDetailIndex === index ? 'checked' : ''}>
-                <label for="${radioId}">
-                    <h4>Option ${index + 1}</h4>
-                    <p><strong>${displayLabel}</strong> ${displayValue}</p>
-                </label>
+                <div class="card-content">
+                    <input type="radio" class="product-option-select" name="${radioGroupName}" id="${radioId}" value="${index}" ${currentSelectedDetailIndex === index ? 'checked' : ''}>
+                    <label for="${radioId}">
+                        <h4>Option ${index + 1}</h4>
+                        <p><strong>${displayLabel}</strong> ${displayValue}</p>
+                    </label>
             `;
-            // Note: Full details like monthly/yearly/closure terms are NOT shown here initially.
 
+            if (detail.doublingRemark) {
+                cardContent += `<p><strong>Remarks:</strong> ${detail.doublingRemark}</p>`;
+            } else if (productName.toLowerCase().includes('ncd') || (companyName === "SANGEETH NIDHI" && (detail.period.includes("1 Year to 5 Years") || detail.period.includes("6 MONTHS")))) {
+                cardContent += `
+                    <p><strong>Monthly Interest:</strong> ${detail.monthly || 'N/A'}</p>
+                    <p><strong>Yearly Interest:</strong> ${detail.yearly || 'N/A'}</p>
+                `;
+                if (detail.closureRemark) {
+                    cardContent += `<p><strong>Closure Remark:</strong> ${detail.closureRemark}</p>`;
+                }
+            } else if (!productName.toLowerCase().includes('rd')) {
+                if (detail.monthly) {
+                    cardContent += `<p><strong>Monthly Interest:</strong> ${detail.monthly}</p>`;
+                }
+                if (detail.yearly) {
+                    cardContent += `<p><strong>Yearly Interest:</strong> ${detail.yearly}</p>`;
+                }
+            }
+
+            if (detail.generalRemark) {
+                cardContent += `<p class="general-remark"><strong>Important:</strong> ${detail.generalRemark}</p>`;
+            }
+
+            cardContent += `
+                    <button class="select-option-button">Select & Calculate</button>
+                </div>
+            `;
             card.innerHTML = cardContent;
             productOptionsGrid.appendChild(card);
 
-            // If this card was previously selected, apply the 'selected' class
-            if (currentSelectedDetailIndex === index) {
-                card.classList.add('selected');
-            }
+            card.querySelector('.select-option-button').addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleOptionSelection(index, card);
+            });
         });
+
+        if (companyName === "RD Calculator" && productName === "Recurring Deposit (RD)" && detailsArray.length > 0) {
+            const firstCard = productOptionsGrid.querySelector('.product-card');
+            if (firstCard) {
+                handleOptionSelection(0, firstCard);
+            }
+        }
     } else {
         productOptionsGrid.innerHTML = '<p class="placeholder-text">Select a company and a product type to view available options.</p>';
     }
@@ -279,13 +429,11 @@ function displayProductOptions(companyName, productName) {
 
 
 function handleOptionSelection(index, clickedCard) {
-    // Unselect previous card
     const previouslySelectedCard = document.querySelector('.product-card.selected');
     if (previouslySelectedCard) {
         previouslySelectedCard.classList.remove('selected');
     }
 
-    // Select current card
     clickedCard.classList.add('selected');
     const radioElement = clickedCard.querySelector('.product-option-select');
     if (radioElement) {
@@ -293,10 +441,10 @@ function handleOptionSelection(index, clickedCard) {
     }
 
     currentSelectedDetailForCalc = currentSelectedProductOptions[index];
-    currentSelectedDetailIndex = index; // Store the index of the selected item
+    currentSelectedDetailIndex = index;
     setAmountConstraints(currentSelectedDetailForCalc);
     displaySingleProductDetailsAndCalculator(companySelect.value, productSelect.value, currentSelectedDetailForCalc);
-    calculateInvestmentReturns(); // Perform initial calculation
+    showSingleOptionCalculatorView();
 }
 
 
@@ -304,411 +452,392 @@ function displaySingleProductDetailsAndCalculator(companyName, productName, deta
     if (!detail) {
         selectedProductDetailCard.innerHTML = '<p class="placeholder-text">No option selected for detailed view.</p>';
         calculatorResultsDiv.innerHTML = '<p class="placeholder-text">Select an option to calculate returns.</p>';
+        periodInputGroup.style.display = 'none';
+        rdMonthlyTransferGroup.classList.add('hidden');
+        investmentPeriodInput.value = '';
         return;
     }
 
-    // Populate the single view's header
     selectedCompanyNameSingle.textContent = companyName;
     selectedProductNameSingle.textContent = productName;
-
     const isDoublingProduct = productName.toLowerCase().includes('doubling');
     const isNCDProduct = productName.toLowerCase().includes('ncd');
+    const isRDProduct = (companyName === "RD Calculator" && productName === "Recurring Deposit (RD)");
+    const isSDProduct = productName.toLowerCase().includes('sd 5.5 year');
+    const isSangeethNidhiProduct = companyName === "SANGEETH NIDHI";
+    const isSangeethNidhi1To5Years = isSangeethNidhiProduct && detail.period.includes("1 Year to 5 Years");
+    const isSangeethNidhi6MonthsToLess1Year = isSangeethNidhiProduct && detail.period.includes("6 MONTHS to Less than 1 Year");
+    let cardContent = `
+        <div class="card-content">
+            <h4>Option ${currentSelectedDetailIndex + 1}</h4>
+    `;
 
-    let cardContent = `<h4>Option ${currentSelectedDetailIndex + 1}</h4>`; // Display option number
-
-    // Handle SANGEETH NIDHI special display
-    if (companyName === "SANGEETH NIDHI") {
-        if (detail.period) {
-            cardContent += `<p><strong>For Period:</strong> ${detail.period}</p>`;
+    investmentPeriodInput.innerHTML = '';
+    investmentPeriodInput.type = 'number';
+    investmentPeriodInput.readOnly = false;
+    investmentPeriodInput.disabled = false;
+    investmentPeriodInput.style.display = 'block';
+    periodInputGroup.style.display = 'flex';
+    rdMonthlyTransferGroup.classList.add('hidden');
+    
+    if (isDoublingProduct) {
+        periodInputGroup.style.display = 'none';
+        investmentPeriodInput.value = '';
+        investmentPeriodInput.readOnly = true;
+        investmentPeriodInput.disabled = true;
+    } else if (isNCDProduct || isSangeethNidhi1To5Years) {
+        periodInputGroup.style.display = 'flex';
+        investmentPeriodInput.type = 'number';
+        investmentPeriodInput.min = '1';
+        let maxYears;
+        if (isNCDProduct) {
+            maxYears = 10;
+            investmentPeriodInput.placeholder = 'Enter Period (1-10 Years)';
+        } else if (isSangeethNidhi1To5Years) {
+            maxYears = 5;
+            investmentPeriodInput.placeholder = 'Enter Period (1-5 Years)';
         }
+        investmentPeriodInput.max = maxYears;
+        
+        const periodMatch = detail.period.match(/(\d+)\s*Years?/i);
+        if (periodMatch) {
+            const defaultPeriod = parseInt(periodMatch[1]);
+            if (!isNaN(defaultPeriod) && defaultPeriod <= maxYears) {
+                investmentPeriodInput.value = defaultPeriod;
+            } else if (isSangeethNidhi1To5Years && maxYears === 5) {
+                investmentPeriodInput.value = 5;
+            } else {
+                investmentPeriodInput.value = '';
+            }
+        } else if (isSangeethNidhi1To5Years) {
+            investmentPeriodInput.value = 5;
+        } else {
+            investmentPeriodInput.value = '';
+        }
+        investmentPeriodInput.readOnly = false;
+        investmentPeriodInput.disabled = false;
+        
+        rdMonthlyTransferGroup.classList.remove('hidden');
+        
+    } else if (isSDProduct || isSangeethNidhi6MonthsToLess1Year) {
+        periodInputGroup.style.display = 'none';
+        investmentPeriodInput.value = '';
+        investmentPeriodInput.readOnly = true;
+        investmentPeriodInput.disabled = true;
+        
+        if (!isDoublingProduct) {
+             rdMonthlyTransferGroup.classList.remove('hidden');
+        }
+    } else if (isRDProduct) {
+        periodInputGroup.style.display = 'flex';
+        investmentPeriodInput.type = 'number';
+        investmentPeriodInput.min = '1';
+        investmentPeriodInput.max = '5';
+        investmentPeriodInput.value = '';
+        investmentPeriodInput.placeholder = 'Enter Period (1-5 Years)';
+        rdMonthlyTransferGroup.classList.add('hidden');
+        investmentPeriodInput.readOnly = false;
+        investmentPeriodInput.disabled = false;
     } else {
-        // For other companies, display remarks as "For Amount"
-        if (detail.remarks) {
-            let remarkText = detail.remarks;
-            remarkText = remarkText.replace(/^(Between\s|between\s)/, '');
-            remarkText = remarkText.replace(/\sbetween\s/ig, ' ');
-            remarkText = remarkText.trim();
-            cardContent += `<p><strong>For Amount:</strong> ${remarkText}</p>`;
+        periodInputGroup.style.display = 'flex';
+        investmentPeriodInput.type = 'number';
+        investmentPeriodInput.min = '1';
+        investmentPeriodInput.max = '10';
+        investmentPeriodInput.value = '';
+        investmentPeriodInput.readOnly = false;
+        investmentPeriodInput.disabled = false;
+        rdMonthlyTransferGroup.classList.add('hidden');
+    }
+
+    investmentPeriodInput.addEventListener('input', updateRDTransferPeriodOptions);
+
+    function updateRDTransferPeriodOptions() {
+        let maxYears = parseInt(investmentPeriodInput.value);
+        let rdDefault = null;
+        if (isSDProduct) {
+             maxYears = 5;
+             rdDefault = 5;
+        } else {
+            if (isNaN(maxYears) || maxYears < 1) maxYears = 0;
         }
-        if (detail.period) { // Still display period if it exists and is relevant
-            cardContent += `<p><strong>Period:</strong> ${detail.period}</p>`;
+
+        rdMonthlyTransferPeriodSelect.innerHTML = '<option value="">-- Select a period --</option>';
+        if (maxYears > 0) {
+            for (let i = 1; i <= maxYears; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `${i} Year${i > 1 ? 's' : ''}`;
+                rdMonthlyTransferPeriodSelect.appendChild(option);
+            }
+        }
+        if (rdDefault) {
+            rdMonthlyTransferPeriodSelect.value = rdDefault;
         }
     }
 
-    if (isDoublingProduct) {
+    if (detail.doublingRemark) {
         cardContent += `<p><strong>Remarks:</strong> ${detail.doublingRemark}</p>`;
-    } else if (isNCDProduct) {
+    } else if (isNCDProduct || isSangeethNidhi1To5Years) {
         cardContent += `
-            <p><strong>Monthly Interest:</strong> ${detail.monthly}</p>
-            <p><strong>Yearly Interest:</strong> ${detail.yearly}</p>
-            <p><strong>Closure Remark:</strong> ${detail.closureRemark}</p>
-            <p><strong>Premature Closure Terms:</strong></p>
-            <table class="closure-table product-details-table"><thead>
-                <tr><th>Closure Period</th><th>Interest Cut</th></tr>
-            </thead><tbody>`;
-        if (detail.closureTerms && detail.closureTerms.length > 0) {
-            detail.closureTerms.forEach(term => {
-                cardContent += `<tr><td>${term.period}</td><td>${term.cut}</td></tr>`;
-            });
-        } else {
-            cardContent += `<tr><td colspan="2">No specific closure terms provided.</td></tr>`;
+            <p><strong>Monthly Interest:</strong> ${detail.monthly || 'N/A'}</p>
+            <p><strong>Yearly Interest:</strong> ${detail.yearly || 'N/A'}</p>
+        `;
+        if (detail.closureRemark) {
+            cardContent += `<p><strong>Closure Remark:</strong> ${detail.closureRemark}</p>`;
         }
-        cardContent += `</tbody></table>`;
-    } else { // SD and Sangeeth Nidhi (after specific SANGEETH NIDHI check)
+    } else if (!isRDProduct) {
         if (detail.monthly) {
             cardContent += `<p><strong>Monthly Interest:</strong> ${detail.monthly}</p>`;
         }
         if (detail.yearly) {
             cardContent += `<p><strong>Yearly Interest:</strong> ${detail.yearly}</p>`;
         }
+    } else if (isRDProduct) {
+        cardContent += `
+            <p><strong>Remarks:</strong> ${detail.remarks}</p>
+            <p><strong>Annual Interest Rate:</strong> 12%</p>
+        `;
     }
 
-    if ((isDoublingProduct || productName.toLowerCase().includes('sd')) && detail.generalRemark) {
+    if (detail.generalRemark) {
         cardContent += `<p class="general-remark"><strong>Important:</strong> ${detail.generalRemark}</p>`;
     }
+    cardContent += '</div>';
 
     selectedProductDetailCard.innerHTML = cardContent;
 
-    // Show the single option + calculator view
-    showSingleOptionCalculatorView();
+    updateRDTransferPeriodOptions();
 }
 
 
-// --- Calculator Logic (remains largely the same) ---
-
-// Function to safely parse percentage strings
-function parsePercentage(value) {
-    if (typeof value === 'string') {
-        const num = parseFloat(value.replace('%', ''));
-        return isNaN(num) ? null : num / 100;
-    }
-    return null;
-}
-
-// New function to parse the amount from the remarks string
-function parseAmountRange(remarks) {
-    let min = 0;
-    let max = Infinity;
-    let specific = null;
-
-    if (!remarks) {
-        return { min, max, specific };
-    }
-
-    const lowerCaseRemarks = remarks.toLowerCase();
-
-    // Check for "X Lakhs & above" or "X & above" (e.g., "25 Lakhs & above", "5000 & Above")
-    const aboveMatch = lowerCaseRemarks.match(/(\d+\s*lakhs|\d+)\s*&?\s*above/);
-    if (aboveMatch) {
-        min = parseAmountString(aboveMatch[1]);
-        // max remains Infinity
-    }
-    // Check for ranges like "X to less than Y Lakhs/amount"
-    else if (lowerCaseRemarks.includes('to less than')) {
-        const match = lowerCaseRemarks.match(/(\d+\s*lakhs|\d+)\s*to less than\s*(\d+\s*lakhs|\d+)/);
-        if (match) {
-            min = parseAmountString(match[1]);
-            max = parseAmountString(match[2]) - 1; // "less than" means up to the number minus one
-        }
-    }
-    // Check for exact amounts like "X Lakhs" or "X" (e.g., "5 Lakhs", "5000")
-    else if (/\d+/.test(lowerCaseRemarks)) { // If there's a number, and it's not a range or "above"
-        const exactMatch = lowerCaseRemarks.match(/(\d+\s*lakhs|\d+)/);
-        if (exactMatch) {
-            specific = parseAmountString(exactMatch[0]);
-            min = specific;
-            max = specific;
-        }
-    }
-
-    return { min, max, specific };
-}
-
-// Helper function to convert Lakhs strings to numbers
-function parseAmountString(amountStr) {
-    amountStr = amountStr.toLowerCase().replace(/\s/g, '');
-    if (amountStr.includes('lakhs')) {
-        return parseFloat(amountStr.replace('lakhs', '')) * 100000;
-    }
-    return parseFloat(amountStr);
-}
-
-// Function to set min/max attributes on the investment amount input
-function setAmountConstraints(detail) {
-    // SANGEETH NIDHI products do not have amount-based remarks for calculator constraints.
-    // They are based on 'period' for display, and '5000 and above' is a general minimum.
-    if (companySelect.value === "SANGEETH NIDHI") {
-        specificAmountRequired = false;
-        investmentAmountInput.readOnly = false;
-        investmentAmountInput.min = '5000'; // Default minimum for Sangeeth Nidhi
-        investmentAmountInput.max = ''; // No max
-        allowedMinAmount = 5000;
-        allowedMaxAmount = Infinity;
-        investmentAmountInput.placeholder = 'Enter ₹ 5,000 and above';
-        return; // Exit early as no further parsing of remarks is needed for constraints
-    }
-
-    if (!detail || !detail.remarks) {
-        resetAmountConstraints();
-        return;
-    }
-
-    const { min, max, specific } = parseAmountRange(detail.remarks);
-
-    allowedMinAmount = min;
-    allowedMaxAmount = max;
-
-    if (specific !== null) {
-        specificAmountRequired = true;
-        investmentAmountInput.value = specific; // Pre-fill with specific amount
-        investmentAmountInput.readOnly = true; // Make it read-only
-        investmentAmountInput.min = specific;
-        investmentAmountInput.max = specific;
-    } else {
-        specificAmountRequired = false;
-        investmentAmountInput.readOnly = false; // Make it editable
-        investmentAmountInput.min = min === 0 ? '' : min;
-        investmentAmountInput.max = max === Infinity ? '' : max;
-    }
-
-    investmentAmountInput.placeholder = getPlaceholderText(min, max, specific);
-}
-
-// Helper function to generate placeholder text based on constraints
-function getPlaceholderText(min, max, specific) {
-    if (specific !== null) {
-        return `Enter ₹ ${specific.toLocaleString('en-IN')}`;
-    }
-    if (min > 0 && max !== Infinity) {
-        return `Enter between ₹ ${min.toLocaleString('en-IN')} and ₹ ${max.toLocaleString('en-IN')}`;
-    }
-    if (min > 0) {
-        return `Enter ₹ ${min.toLocaleString('en-IN')} and above`;
-    }
-    return 'e.g., 10000';
-}
-
-// Function to reset min/max attributes
-function resetAmountConstraints() {
-    allowedMinAmount = 0;
-    allowedMaxAmount = Infinity;
-    specificAmountRequired = false;
-    investmentAmountInput.readOnly = false;
-    investmentAmountInput.min = '';
-    investmentAmountInput.max = '';
-    investmentAmountInput.placeholder = 'e.g., 10000';
-    investmentAmountInput.classList.remove('invalid-input'); // Remove any invalid styling
-}
-
-
-// Calculate Investment Returns
 function calculateInvestmentReturns() {
+    const company = companySelect.value;
+    const product = productSelect.value;
     const amount = parseFloat(investmentAmountInput.value);
-    calculatorResultsDiv.innerHTML = '';
+    let period = parseInt(investmentPeriodInput.value);
+    const rdTransferPeriod = parseInt(rdMonthlyTransferPeriodSelect.value);
+    const resultsDiv = document.getElementById('calculator-results');
 
-    if (isNaN(amount) || amount <= 0) {
-        calculatorResultsDiv.innerHTML = '<p class="placeholder-text">Enter a valid positive amount.</p>';
+    if (!amount || isNaN(amount) || amount < allowedMinAmount || amount > allowedMaxAmount) {
+        const minDisplay = allowedMinAmount.toLocaleString('en-IN');
+        const maxDisplay = allowedMaxAmount === Infinity ? 'or more' : `and ₹ ${(allowedMaxAmount + 1).toLocaleString('en-IN')}`;
+        resultsDiv.innerHTML = `<p class="error-text">Please enter a valid amount between ₹ ${minDisplay} ${maxDisplay}</p>`;
         investmentAmountInput.classList.add('invalid-input');
         return;
     }
+    investmentAmountInput.classList.remove('invalid-input');
 
-    if (!currentSelectedDetailForCalc || !currentSelectedProductType) {
-        calculatorResultsDiv.innerHTML = '<p class="placeholder-text">Please select a product option above to calculate returns.</p>';
-        investmentAmountInput.classList.remove('invalid-input');
-        return;
-    }
+    const isSDProduct = product.toLowerCase().includes('sd 5.5 year');
+    const isDoublingProduct = product.toLowerCase().includes('doubling');
+    const isRDProduct = product.toLowerCase().includes('rd');
 
-    // Amount validation based on selected option's remarks
-    // Special handling for SANGEETH NIDHI for fixed 5000 min
-    if (companySelect.value === "SANGEETH NIDHI") {
-        if (amount < 5000) {
-            calculatorResultsDiv.innerHTML = `<p class="error-message">Please enter an amount of ₹ 5,000 or more for Sangeeth Nidhi.</p>`;
-            investmentAmountInput.classList.add('invalid-input');
-            return;
+    if (currentSelectedDetailForCalc.period) {
+        const periodMatch = currentSelectedDetailForCalc.period.match(/(\d+)\s*Years?/i);
+        if (periodMatch && !period) {
+            period = parseInt(periodMatch[1]);
         }
-    } else if (specificAmountRequired && amount !== allowedMinAmount) {
-        calculatorResultsDiv.innerHTML = `<p class="error-message">Please enter the specific amount: ₹ ${allowedMinAmount.toLocaleString('en-IN')}</p>`;
-        investmentAmountInput.classList.add('invalid-input');
-        return;
-    } else if (!specificAmountRequired && (amount < allowedMinAmount || amount > allowedMaxAmount)) {
-        let errorMessage = `<p class="error-message">Please enter an amount `;
-        if (allowedMinAmount > 0 && allowedMaxAmount !== Infinity) {
-            errorMessage += `between ₹ ${allowedMinAmount.toLocaleString('en-IN')} and ₹ ${allowedMaxAmount.toLocaleString('en-IN')}.`;
-        } else if (allowedMinAmount > 0) {
-            errorMessage += `of ₹ ${allowedMinAmount.toLocaleString('en-IN')} or more.`;
-        }
-        errorMessage += `</p>`;
-        calculatorResultsDiv.innerHTML = errorMessage;
-        investmentAmountInput.classList.add('invalid-input');
-        return;
-    }
-    
-    investmentAmountInput.classList.remove('invalid-input'); // If validation passes
-
-    const detail = currentSelectedDetailForCalc;
-    const productName = currentSelectedProductType;
-    const companyName = companySelect.value;
-
-    if (companyName === "Vanchinad Finance (P) Ltd" && productName === "Non-Convertible Debentures (NCD)") {
-        calculatorResultsDiv.innerHTML = `
-            <div class="no-ncd-message">
-                <p><strong>Currently no NCD Issue Available for calculation. Kindly Opt SML NCD.</strong></p>
-            </div>
-        `;
-        return;
     }
 
-    const isDoublingProduct = productName.toLowerCase().includes('doubling');
-    const isNCDProduct = productName.toLowerCase().includes('ncd');
+    if (!period && !isDoublingProduct && !isRDProduct && !isSDProduct) {
+        resultsDiv.innerHTML = `<p class="error-text">Please enter a valid investment period.</p>`;
+        investmentPeriodInput.classList.add('invalid-input');
+        return;
+    }
+    investmentPeriodInput.classList.remove('invalid-input');
 
     let resultsHTML = '';
+    
+    // Function to calculate RD maturity value
+    function calculateRDMaturity(monthlyDeposit, years) {
+        let maturity = 0;
+        let totalPrincipal = 0;
+        const rdAnnualRate = 0.1212;
+        const quarterlyRate = rdAnnualRate / 4;
+    
+        if (monthlyDeposit === 1000) {
+             if (rdMaturityValues[years]) {
+                maturity = rdMaturityValues[years];
+             } else {
+                 // For cases beyond 5 years or other amounts, fall back to formula
+                 let currentPrincipal = 0;
+                 for (let month = 1; month <= (12 * years); month++) {
+                     currentPrincipal += monthlyDeposit;
+                     if (month % 3 === 0) {
+                         currentPrincipal += currentPrincipal * quarterlyRate;
+                     }
+                 }
+                maturity = currentPrincipal;
+             }
+        } else {
+            const baseAmount = 1000;
+            const multiplier = monthlyDeposit / baseAmount;
+            if (rdMaturityValues[years]) {
+                 maturity = rdMaturityValues[years] * multiplier;
+            } else {
+                // Generic calculation for other amounts/periods
+                 let currentPrincipal = 0;
+                 for (let month = 1; month <= (12 * years); month++) {
+                     currentPrincipal += monthlyDeposit;
+                     if (month % 3 === 0) {
+                         currentPrincipal += currentPrincipal * quarterlyRate;
+                     }
+                 }
+                maturity = currentPrincipal;
+            }
+        }
+        return maturity;
+    }
 
+    // --- Start of corrected calculation logic ---
     if (isDoublingProduct) {
-        const maturityAmount = amount * 2;
-        resultsHTML += `
-            <div class="calculator-result-card">
-                <h4>Doubling Scheme Result</h4>
-                <p>Investment Amount: <strong>₹ ${amount.toLocaleString('en-IN')}</strong></p>
-                <p>Maturity Amount (Approx): <strong>₹ ${maturityAmount.toLocaleString('en-IN')}</strong></p>
-                <p>Period: ${detail.period}</p>
-                <p>Remarks: ${detail.doublingRemark}</p>
-            </div>
+        const finalAmount = amount * 2;
+        const totalInterest = finalAmount - amount;
+        resultsHTML = `
+            <h3>Doubling Scheme Returns</h3>
+            <p><strong>Initial Investment:</strong> ₹ ${Math.round(amount).toLocaleString('en-IN')}</p>
+            <p><strong>Period:</strong> ${currentSelectedDetailForCalc.period}</p>
+            <p><strong>Total Interest Earned:</strong> ₹ ${Math.round(totalInterest).toLocaleString('en-IN')}</p>
+            <p><strong>Final Maturity Value:</strong> ₹ ${Math.round(finalAmount).toLocaleString('en-IN')}</p>
         `;
-    } else if (isNCDProduct) {
-        const monthlyRate = parsePercentage(detail.monthly);
-        const yearlyRate = parsePercentage(detail.yearly);
+    } else if (isRDProduct) {
+        resultsHTML += `<h3>RD Returns Calculation</h3>`;
+        resultsHTML += `<p><strong>Note:</strong> The monthly interest is compounded quarterly.</p>`;
+        
+        let totalPrincipal = 0;
+        let totalInterest = 0;
+        let maturityValue = 0;
 
-        let monthlyInterestDisplay = '';
-        if (monthlyRate !== null) {
-            const calculatedMonthlyInterest = amount * monthlyRate / 12;
-            monthlyInterestDisplay = `₹ ${calculatedMonthlyInterest.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        } else if (detail.monthly && (detail.monthly.toLowerCase().includes('not available') || detail.monthly.toLowerCase().includes('monthly'))) {
-            monthlyInterestDisplay = "Not Available";
-        } else {
-             monthlyInterestDisplay = "N/A";
-        }
-
-        let annualInterestDisplay = '';
-        if (yearlyRate !== null) {
-            const calculatedAnnualInterest = amount * yearlyRate;
-            annualInterestDisplay = `₹ ${calculatedAnnualInterest.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        } else if (detail.yearly && detail.yearly.toLowerCase().includes('not available')) {
-             annualInterestDisplay = "Not Available";
-        } else {
-             annualInterestDisplay = "N/A";
-        }
-
-
+        const monthlyDeposit = amount;
+        
         resultsHTML += `
-            <div class="calculator-result-card">
-                <h4>NCD Return Calculation</h4>
-                <p>Investment Amount: <strong>₹ ${amount.toLocaleString('en-IN')}</strong></p>
-                <p>Estimated Monthly Interest: <strong>${monthlyInterestDisplay}</strong></p>
-                <p>Estimated Annual Interest: <strong>${annualInterestDisplay}</strong></p>
-                <p>Period: ${detail.period}</p>
-                <p>Closure Remark: ${detail.closureRemark}</p>
-            </div>
-            <div class="calculator-result-card">
-                <h4>Premature Closure Interest Cut</h4>
-                <p>Refer to the table below for potential interest reductions if closed before maturity.</p>
-                <table class="closure-table">
+            <div class="table-container">
+                <table class="rd-returns-table">
                     <thead>
                         <tr>
-                            <th>Closure Period</th>
-                            <th>Interest Cut / Effective Rate</th> </tr>
+                            <th>Year</th>
+                            <th>Principal Deposited</th>
+                            <th>Interest Earned</th>
+                            <th>Maturity Value</th>
+                        </tr>
                     </thead>
-                    <tbody>`;
-                if (detail.closureTerms && detail.closureTerms.length > 0) {
-                    detail.closureTerms.forEach(term => {
-                        resultsHTML += `
-                            <tr>
-                                <td>${term.period}</td>
-                                <td>${term.cut}</td>
-                            </tr>
-                        `;
-                    });
-                } else {
-                    resultsHTML += `<tr><td colspan="2">No specific closure terms provided.</td></tr>`;
-                }
-                resultsHTML += `
+                    <tbody>
+        `;
+
+        const baseAmount = 1000;
+        const multiplier = monthlyDeposit / baseAmount;
+
+        for (let year = 1; year <= period; year++) {
+            totalPrincipal = monthlyDeposit * 12 * year;
+            let baseMaturity = rdMaturityValues[year] || 0;
+            maturityValue = baseMaturity * multiplier;
+            totalInterest = maturityValue - totalPrincipal;
+            
+            resultsHTML += `
+                <tr>
+                    <td>${year}</td>
+                    <td>₹ ${Math.round(totalPrincipal).toLocaleString('en-IN')}</td>
+                    <td>₹ ${Math.round(totalInterest).toLocaleString('en-IN')}</td>
+                    <td>₹ ${Math.round(maturityValue).toLocaleString('en-IN')}</td>
+                </tr>
+            `;
+        }
+        
+        resultsHTML += `
                     </tbody>
                 </table>
             </div>
-        `;
-    } else {
-        const monthlyRate = parsePercentage(detail.monthly);
-        const yearlyRate = parsePercentage(detail.yearly);
-
-        let monthlyInterestDisplay = '';
-        if (monthlyRate !== null) {
-            const calculatedMonthlyInterest = amount * monthlyRate / 12;
-            monthlyInterestDisplay = `₹ ${calculatedMonthlyInterest.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        } else if (detail.monthly && detail.monthly.toLowerCase().includes('not available')) {
-            monthlyInterestDisplay = "Not Available";
-        } else {
-             monthlyInterestDisplay = "N/A";
-        }
-
-        let annualInterestDisplay = '';
-        if (yearlyRate !== null) {
-            const calculatedAnnualInterest = amount * yearlyRate;
-            annualInterestDisplay = `₹ ${calculatedAnnualInterest.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        } else if (detail.yearly && detail.yearly.toLowerCase().includes('not available')) {
-             annualInterestDisplay = "Not Available";
-        } else {
-             annualInterestDisplay = "N/A";
-        }
-
-        resultsHTML += `
-            <div class="calculator-result-card">
-                <h4>Estimated Interest Earnings</h4>
-                <p>Investment Amount: <strong>₹ ${amount.toLocaleString('en-IN')}</strong></p>
-                <p>Estimated Monthly Interest: <strong>${monthlyInterestDisplay}</strong></p>
-                <p>Estimated Annual Interest: <strong>${annualInterestDisplay}</strong></p>
-                <p>Period: ${detail.period}</p>
-                ${detail.generalRemark ? `<p class="general-remark"><strong>Important:</strong> ${detail.generalRemark}</p>` : ''}
+            <div class="summary-results">
+                <p><strong>Total Principal Deposited:</strong> ₹ ${Math.round(totalPrincipal).toLocaleString('en-IN')}</p>
+                <p><strong>Total Interest Earned:</strong> ₹ ${Math.round(totalInterest).toLocaleString('en-IN')}</p>
+                <p><strong>Final Maturity Value:</strong> ₹ ${Math.round(maturityValue).toLocaleString('en-IN')}</p>
             </div>
         `;
+
+    } else { // Fixed/NCD/Sangeeth Nidhi Deposits
+        
+        let primaryInvestmentPeriod = isSDProduct ? 5.5 : period;
+        let rdReinvestmentPeriod = isSDProduct ? 5 : rdTransferPeriod;
+        
+        let resultsForMonthly = '';
+        if (currentSelectedDetailForCalc.monthly && currentSelectedDetailForCalc.monthly !== 'Not Available') {
+            const monthlyRate = parseFloat(currentSelectedDetailForCalc.monthly) / 100;
+            const monthlyInterest = amount * monthlyRate / 12;
+            const totalInterestPrimary = (amount * monthlyRate) * primaryInvestmentPeriod;
+            const maturityValuePrimary = amount + totalInterestPrimary;
+            resultsForMonthly = `
+                <h4>Calculation based on Monthly Interest Payout</h4>
+                <p><strong>Monthly Interest Payout:</strong> ₹ ${Math.round(monthlyInterest).toLocaleString('en-IN')}</p>
+                <p><strong>Total Interest Earned:</strong> ₹ ${Math.round(totalInterestPrimary).toLocaleString('en-IN')}</p>
+                <p><strong>Final Maturity Value:</strong> ₹ ${Math.round(maturityValuePrimary).toLocaleString('en-IN')}</p>
+            `;
+
+            if (rdTransferPeriod > 0) {
+                const rdMaturity = calculateRDMaturity(monthlyInterest, rdReinvestmentPeriod);
+                const totalRdDeposits = monthlyInterest * 12 * rdReinvestmentPeriod;
+                const rdInterestEarned = rdMaturity - totalRdDeposits;
+                const combinedMaturity = maturityValuePrimary + rdInterestEarned;
+                const extraEarnings = rdInterestEarned;
+
+                resultsForMonthly += `
+                    <div class="reinvestment-summary">
+                        <h4>Reinvestment in RD with Monthly Interest</h4>
+                        <p>The monthly interest of ₹ ${Math.round(monthlyInterest).toLocaleString('en-IN')} is deposited into an RD for ${rdReinvestmentPeriod} years.</p>
+                        <p><strong>Total Extra Earnings by reinvesting in RD:</strong> ₹ ${Math.round(extraEarnings).toLocaleString('en-IN')}</p>
+                        <p><strong>Total Combined Maturity (Primary + RD):</strong> ₹ ${Math.round(combinedMaturity).toLocaleString('en-IN')}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        let resultsForYearly = '';
+        if (currentSelectedDetailForCalc.yearly && currentSelectedDetailForCalc.yearly !== 'Not Available') {
+            const yearlyRate = parseFloat(currentSelectedDetailForCalc.yearly) / 100;
+            const yearlyInterest = amount * yearlyRate;
+            const totalInterestYearly = yearlyInterest * primaryInvestmentPeriod;
+            const maturityValueYearly = amount + totalInterestYearly;
+            resultsForYearly = `
+                <h4>Calculation based on Yearly Interest Payout</h4>
+                <p><strong>Yearly Interest Payout:</strong> ₹ ${Math.round(yearlyInterest).toLocaleString('en-IN')}</p>
+                <p><strong>Total Interest Earned:</strong> ₹ ${Math.round(totalInterestYearly).toLocaleString('en-IN')}</p>
+                <p><strong>Final Maturity Value:</strong> ₹ ${Math.round(maturityValueYearly).toLocaleString('en-IN')}</p>
+            `;
+        }
+
+        resultsHTML = `
+            <h3>Investment Returns Calculation</h3>
+            <p><strong>Initial Investment:</strong> ₹ ${Math.round(amount).toLocaleString('en-IN')}</p>
+            <p><strong>Period:</strong> ${primaryInvestmentPeriod} Year${primaryInvestmentPeriod > 1 ? 's' : ''}</p>
+            ${resultsForMonthly}
+            ${resultsForYearly}
+        `;
     }
 
-    calculatorResultsDiv.innerHTML = resultsHTML;
+    resultsDiv.innerHTML = resultsHTML;
 }
 
-// Event Listeners
-companySelect.addEventListener('change', (event) => {
-    const selectedCompany = event.target.value;
-    populateProductSelect(selectedCompany);
+
+// --- Event Listeners ---
+companySelect.addEventListener('change', (e) => {
+    populateProductSelect(e.target.value);
 });
 
-productSelect.addEventListener('change', (event) => {
-    const selectedProduct = event.target.value;
-    const selectedCompany = companySelect.value;
-    displayProductOptions(selectedCompany, selectedProduct); // Now calls displayProductOptions
+productSelect.addEventListener('change', (e) => {
+    const companyName = companySelect.value;
+    const productName = e.target.value;
+    displayProductOptions(companyName, productName);
 });
 
-// Listener for amount input
-investmentAmountInput.addEventListener('input', calculateInvestmentReturns);
+calculateButton.addEventListener('click', calculateInvestmentReturns);
+changeOptionButton.addEventListener('click', showAllOptionsView);
 
-// Listener for the "Change Option" button
-changeOptionButton.addEventListener('click', () => {
-    showAllOptionsView();
-});
-
-// Smooth scroll for calculator link (Modified behavior for new UI)
-goToCalculatorLink.addEventListener('click', function (e) {
-    e.preventDefault();
-    // Only scroll if single option view is active, otherwise just selecting product will show it
-    if (!singleOptionCalculatorView.classList.contains('hidden')) {
-        singleOptionCalculatorView.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    } else {
-        // If not in single view, do nothing or show a message to select option first
-        alert('Please select a product option first to go to the calculator!');
+goToCalculatorLink.addEventListener('click', (e) => {
+    if (singleOptionCalculatorView.classList.contains('hidden')) {
+        e.preventDefault();
+        alert('Please select a product option first to use the calculator.');
     }
 });
 
 
-// Initial state (ensures calculator clears)
-populateProductSelect('');
+document.addEventListener('DOMContentLoaded', () => {
+    populateCompanySelect();
+});
