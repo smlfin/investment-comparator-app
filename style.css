@@ -1,722 +1,418 @@
-/* General Reset and Box Sizing */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --primary-color: #3f51b5; /* A deeper, calming blue (Indigo) */
-    --secondary-color: #4CAF50; /* A fresh, vibrant green */
-    --accent-color: #FFC107; /* A warm, inviting amber for highlights */
-    --background-light: #ECEFF1; /* Very light gray for overall background */
-    --surface-color: #FFFFFF; /* Pure white for card backgrounds */
-    --text-dark: #212121; /* Darker text for readability */
-    --text-medium: #616161; /* Medium gray for secondary text */
-    --border-light: #E0E0E0; /* Light border color */
-    --shadow-color: rgba(0, 0, 0, 0.1); /* Subtle shadow for floating */
-    --hover-light: #F5F5F5; /* Light hover background */
-    --error-color: #D32F2F; /* Red for errors */
-    --warning-color: #FF9800; /* Orange for warnings/NCD messages */
-}
-
+/* General Body and Layout */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: var(--background-light); /* Updated to new background variable */
-    color: var(--text-dark); /* Darker text for readability */
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased; /* Smoother fonts */
-    -moz-osx-font-smoothing: grayscale; /* Smoother fonts */
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    flex-grow: 1;
+}
+
+/* Header */
 header {
-    background-color: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
     padding: 1.5rem 0;
     text-align: center;
-    box-shadow: 0 4px 12px var(--shadow-color); /* Stronger shadow for header float */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 2.8rem;
+    letter-spacing: 0.5px;
 }
 
 header p {
     font-size: 1.1rem;
     opacity: 0.9;
-    margin-top: 0.5rem;
 }
 
 /* Navigation */
-.main-nav {
-    margin-top: 1rem;
-}
-
 .main-nav ul {
     list-style: none;
     padding: 0;
-    margin: 0;
-    display: flex; /* Arrange links horizontally */
-    justify-content: center; /* Center the links */
-    gap: 1rem; /* Space between links */
+    margin: 1rem 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
 }
 
 .main-nav li {
-    position: relative; /* CRITICAL: Needed for dropdown positioning */
+    position: relative;
 }
 
 .main-nav a {
-    color: white;
+    color: #fff;
     text-decoration: none;
-    background-color: var(--secondary-color);
-    padding: 0.5rem 1rem;
+    padding: 10px 15px;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-    display: block; /* Make the whole area clickable for dropdown button */
-    box-shadow: 0 2px 6px var(--shadow-color); /* Light shadow on nav items */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block;
 }
 
-.main-nav a:hover {
-    background-color: #388E3C; /* Darker green for hover */
+.main-nav a:hover, .dropbtn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 /* Dropdown specific styles */
 .dropdown {
-    position: relative; /* Essential for positioning its children */
-    display: inline-block; /* Allows the dropdown to sit inline with other nav items */
+    position: relative;
+    display: inline-block;
 }
 
 .dropbtn {
+    background-color: transparent;
     color: white;
-    padding: 0.5rem 1rem;
-    background-color: var(--secondary-color);
-    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
     cursor: pointer;
-    white-space: nowrap; /* Prevent text from wrapping on the button */
-    display: inline-flex; /* Use inline-flex to align arrow with text */
-    align-items: center; /* Vertically center content */
-    gap: 8px; /* Space between text and arrow */
-    box-shadow: 0 2px 6px var(--shadow-color); /* Light shadow on nav items */
-}
-
-.dropbtn:hover {
-    background-color: #388E3C;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .dropdown-arrow {
+    border: solid white;
+    border-width: 0 2px 2px 0;
     display: inline-block;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid white; /* White arrow pointing down */
-    vertical-align: middle;
-    transition: transform 0.2s ease; /* Smooth rotation for arrow */
-}
-
-/* Rotate arrow when dropdown is open */
-.dropdown:hover .dropdown-arrow {
-    transform: rotate(180deg);
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transition: transform 0.3s ease;
 }
 
 .dropdown-content {
-    display: none; /* Hidden by default */
+    display: none;
     position: absolute;
-    background-color: var(--surface-color); /* White background for dropdown */
-    min-width: 200px;
-    box-shadow: 0px 8px 16px var(--shadow-color); /* Updated shadow variable */
-    z-index: 1; /* Ensure it appears above other content */
+    background-color: #f9f9f9;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
     border-radius: 5px;
-    overflow: hidden; /* Ensures border-radius applies to contents */
-    top: 100%; /* Position below the button */
-    left: 50%;
-    transform: translateX(-50%); /* Center the dropdown horizontally relative to its parent */
-    margin-top: 5px; /* Small gap below button */
+    overflow: hidden;
+    right: 0; /* Align dropdown to the right */
+    top: calc(100% + 5px); /* Position below the button */
 }
 
 .dropdown-content a {
-    color: var(--text-dark); /* Darker text for dropdown items */
+    color: #333;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    background-color: transparent; /* Reset background from main-nav a */
-    font-weight: normal; /* Reset font weight */
-    border-radius: 0; /* Remove border-radius from individual items */
-    text-align: left; /* Align text left within dropdown */
+    text-align: left;
+    transition: background-color 0.2s ease;
 }
 
 .dropdown-content a:hover {
-    background-color: var(--hover-light); /* Hover effect for dropdown items */
-    color: var(--primary-color); /* Change text color on hover */
+    background-color: #e2e6ea;
 }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-
-.container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    background-color: var(--surface-color); /* White container background */
-    border-radius: 12px; /* More rounded corners */
-    box-shadow: 0 8px 20px var(--shadow-color); /* Enhanced shadow for floating */
+.dropdown:hover .dropdown-arrow {
+    transform: rotate(225deg); /* Arrow points up when dropdown is open */
 }
 
-.controls, .display-area, .calculator-area { /* Apply consistent base styles */
-    background-color: var(--surface-color); /* White inner background */
-    padding: 1.5rem 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Lighter shadow for inner sections */
-}
-
+/* Controls Section */
 .controls {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #eaf4f1;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .control-group {
+    flex: 1;
+    min-width: 280px;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    min-width: 250px;
 }
 
-.invalid-input {
-    border-color: var(--error-color) !important; /* Red border for invalid input */
-    box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.25) !important; /* Adjusted to error color's alpha */
-}
-
-.error-message {
-    color: var(--error-color); /* Red text for error messages */
+.control-group label {
+    margin-bottom: 8px;
     font-weight: bold;
-    margin-top: 1rem;
+    color: #555;
+    font-size: 0.95rem;
 }
 
-label {
-    font-weight: bold;
-    color: var(--text-medium); /* Softer label color */
-    font-size: 1rem;
-}
-
-select, input[type="number"] {
-    padding: 0.8rem 1rem;
-    border: 1px solid var(--border-light); /* Light border color */
+.control-group select,
+.control-group input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
-    background-color: white;
+    background-color: #fff;
+    box-sizing: border-box; /* Include padding in width */
+    -webkit-appearance: none; /* Remove default styling for select */
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007bff%22%20d%3D%22M287%2C197.398L146.2%2C56.698L5.4%2C197.398h281.6z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 12px auto;
     cursor: pointer;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-select:focus, input[type="number"]:focus {
-    border-color: var(--primary-color); /* Primary color on focus */
-    box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.25); /* Adjusted to primary color's alpha */
-    outline: none;
-}
-
-select:disabled {
-    background-color: var(--hover-light); /* Light hover background */
+.control-group select:disabled {
+    background-color: #e9ecef;
     cursor: not-allowed;
-    color: #666;
+    color: #6c757d;
 }
 
-.display-area, .calculator-area {
-    text-align: center;
+/* Display Areas */
+.display-area {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    margin-bottom: 25px;
 }
 
-.display-area h2, .calculator-area h2 {
-    color: var(--primary-color);
+.display-area h2,
+.display-area h3 {
+    color: #007bff;
     margin-top: 0;
-    font-size: 2rem;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 .display-area h3 {
-    color: var(--secondary-color);
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    color: #555;
 }
 
-.product-details-grid { /* This is now the grid for the "all options" view */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-/* Base style for all product cards (both compact and detailed) */
-.product-card {
-    background-color: var(--hover-light); /* Light background for cards */
-    border: 1px solid var(--border-light); /* Light border color */
-    border-radius: 8px;
-    padding: 1rem 1.2rem; /* Adjusted padding for a more compact feel */
-    text-align: left;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* More noticeable floating shadow */
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
-    position: relative;
-    margin-bottom: 0.8rem; /* Consistent spacing between cards in the grid */
-}
-
-.product-card:hover {
-    transform: translateY(-3px); /* Smoother, higher lift */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.12); /* Smoother, higher lift */
-    background-color: var(--hover-light); /* Keep consistent on hover */
-}
-
-/* Style for the compact product option cards (which are .product-card inside .product-details-grid) */
-.product-details-grid .product-card {
-    padding: 0.8rem 1rem; /* More compact padding for grid items */
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Vertically center content */
-    gap: 10px; /* Space between radio and text */
-    cursor: pointer; /* Indicate it's clickable */
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05); /* Lighter shadow for initial selection */
-}
-
-.product-details-grid .product-card:hover {
-    background-color: var(--hover-light); /* Maintain hover color */
-    transform: translateY(-2px); /* Less lift for compact cards */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-}
-
-.product-details-grid .product-card h4 {
-    flex-grow: 1; /* Allow h4 to take available space */
-    border-bottom: none; /* No border for compact cards */
-    padding-bottom: 0;
-    margin-bottom: 0;
-    font-size: 1.05rem; /* Slightly larger for main title */
-    color: var(--text-dark); /* Darker heading for clarity */
-}
-
-.product-details-grid .product-card p {
-    margin: 0; /* Remove margin from paragraphs */
-    font-size: 0.85rem; /* Smaller font for remarks */
-    color: var(--text-medium);
-}
-
-/* Radio button within compact cards - styled to be part of the card */
-.product-details-grid .product-option-select {
-    position: static; /* Position normally within flex */
-    flex-shrink: 0; /* Don't shrink the radio button */
-    width: 20px;
-    height: 20px;
-    margin-right: 0; /* No external margin */
-    border: 2px solid var(--primary-color);
-    margin-left: -5px; /* Adjust if it's too far right */
-    appearance: none; /* Hide default radio button */
-    -webkit-appearance: none; /* For Safari */
-    border-radius: 50%;
-    outline: none;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.product-details-grid .product-option-select:checked {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.product-details-grid .product-option-select:checked::before {
-    content: '';
-    display: block;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.product-details-grid .product-card.selected {
-    border: 2px solid var(--primary-color); /* Highlight selected card */
-    background-color: var(--hover-light);
-    box-shadow: 0 4px 12px var(--shadow-color);
-}
-
-
-.product-card strong {
-    color: var(--text-dark); /* Strong text, not necessarily primary color */
+.hidden {
+    display: none !important;
 }
 
 .placeholder-text {
+    text-align: center;
+    color: #888;
     font-style: italic;
-    color: var(--text-medium); /* Medium gray for placeholders */
-    margin-top: 50px;
-    font-size: 1.1rem;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    margin-top: 20px;
 }
 
-/* Specific styles for NCD closure table within Product Details cards */
-.product-details-grid .closure-table {
-    width: 100%;
-    max-width: 220px;
-    margin: 1rem auto;
-    border-collapse: collapse;
-    font-size: 0.75em;
-}
-
-.product-details-grid .closure-table th,
-.product-details-grid .closure-table td {
-    border: 1px solid var(--border-light); /* Light border color */
-    padding: 0.4rem;
-    text-align: left;
-    white-space: normal;
-}
-
-.product-details-grid .closure-table th {
-    background-color: var(--primary-color); /* Primary color for table headers */
-    color: var(--surface-color); /* White text for table headers */
-    font-weight: bold;
-}
-
-.product-details-grid .closure-table tbody tr:nth-child(even) {
-    background-color: var(--hover-light); /* Light hover background */
-}
-
-.product-details-grid .closure-table tbody tr:hover {
-    background-color: #e0e0e0;
-}
-
-
-/* Styles for Calculator Table */
-.calculator-results-grid .closure-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    font-size: 0.9em;
-}
-
-.calculator-results-grid .closure-table th,
-.calculator-results-grid .closure-table td {
-    border: 1px solid var(--border-light); /* Light border color */
-    padding: 0.8rem;
-    text-align: left;
-    white-space: normal;
-}
-
-.calculator-results-grid .closure-table th {
-    background-color: var(--primary-color); /* Primary color for table headers */
-    color: var(--surface-color); /* White text for table headers */
-    font-weight: bold;
-}
-
-.calculator-results-grid .closure-table tbody tr:nth-child(even) {
-    background-color: var(--hover-light); /* Light hover background */
-}
-
-.calculator-results-grid .closure-table tbody tr:hover {
-    background-color: #e0e0e0;
-}
-
-
-.general-remark {
-    font-size: 0.95em;
-    color: var(--primary-color); /* Use primary for important remarks */
-    margin-top: 1rem;
-    font-weight: bold;
-}
-
-/* Style for the "No NCD" message */
-.no-ncd-message {
-    background-color: #FFF8E1; /* Lighter warning background */
-    color: var(--warning-color); /* Orange warning color */
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1.5rem auto;
-    font-weight: bold;
-    font-size: 1.1em;
-    border: 1px solid var(--accent-color); /* Amber accent for border */
-    text-align: center;
-}
-
-
-/* Calculator specific styles */
-.calculator-controls {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.calculator-area input[type="number"] {
-    max-width: 300px;
-    text-align: center;
-}
-
-.calculator-results-grid {
+/* Product Options Grid (All Options View) */
+.product-details-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-    text-align: left;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding-top: 15px;
 }
 
-.calculator-result-card {
-    background-color: var(--hover-light); /* Light background for result cards */
-    border: 1px solid var(--border-light); /* Light border color */
-    border-radius: 6px;
-    padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06); /* Subtle lift */
-}
-
-.calculator-result-card h4 {
-    color: var(--primary-color);
-    margin-top: 0;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-}
-
-.calculator-result-card p {
-    margin: 0.2rem 0;
-    font-size: 0.9em;
-}
-
-.calculator-result-card strong {
-    color: var(--primary-color); /* Make calculated values stand out more */
-    font-size: 1.1em;
-}
-
-/* --- NEW STYLES FOR SLEEK MOBILE UI --- */
-
-/* Utility class to hide elements */
-.hidden {
-    display: none !important;
-    opacity: 0;
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-}
-
-/* Base styles for view transitions */
-#all-options-view,
-#single-option-calculator-view {
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-    transform: translateY(0); /* Default state */
-    padding-top: 0; /* Adjust padding if needed to control vertical space */
-    padding-bottom: 0;
-}
-
-/* Styles for the single selected product detail card */
-#selected-product-detail-card {
-    background-color: var(--surface-color); /* White background for the main detailed card */
-    border: 1px solid var(--border-light);
+.product-card {
+    background-color: #fefefe;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Stronger shadow for the main floating card */
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-#selected-product-detail-card h4 {
-    color: var(--primary-color);
+.product-card:hover {
+    transform: translateY(-3px);
+    border-color: #007bff;
+}
+
+.product-card input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2); /* Make radio button larger */
+    accent-color: #007bff; /* Custom color for radio button */
+}
+
+.product-card.selected {
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    background-color: #e6f0ff;
+}
+
+.product-card h4 {
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 10px;
     font-size: 1.3rem;
-    border-bottom: 2px solid var(--secondary-color);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
 }
 
-#selected-product-detail-card p {
-    margin: 0.5rem 0;
-    font-size: 1rem;
-    color: var(--text-dark);
+.product-card p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.95rem;
 }
 
-#selected-product-detail-card strong {
-    color: var(--primary-color);
+.product-card p strong {
+    color: #333;
 }
 
-/* Action Button (e.g., Change Option) */
+/* Single Option Calculator View */
+#single-option-calculator-view #selected-product-detail-card {
+    cursor: default;
+    background-color: #f7fcff; /* Lighter background for the selected card */
+    margin-bottom: 25px;
+}
+
+#single-option-calculator-view #selected-product-detail-card:hover {
+    transform: none; /* No hover effect on the displayed card */
+    border-color: #e0e0e0;
+}
+
+#single-option-calculator-view #selected-product-detail-card h4 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+#single-option-calculator-view #selected-product-detail-card p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
 .action-button {
-    display: block; /* Make it a block element */
-    width: 100%; /* Full width */
-    padding: 1rem 1.5rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-    background-color: var(--primary-color);
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background-color: #28a745;
     color: white;
     border: none;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .action-button:hover {
-    background-color: #314299; /* Slightly darker primary on hover */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    background-color: #218838;
+    transform: translateY(-1px);
 }
 
-/* Adjust calculator area spacing when active */
-#single-option-calculator-view .calculator-area {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    margin-top: 0; /* Remove top margin if needed, managed by button */
+.action-button:active {
+    transform: translateY(1px);
 }
 
-/* --- GLOBAL TRANSITIONS --- */
-body, button, select, input, .product-card, .calculator-result-card, .dropdown-content, .main-nav a, .dropbtn, .action-button, .product-details-grid .product-card.selected {
-    transition: all 0.3s ease-in-out;
+.secondary-button {
+    background-color: #6c757d;
 }
 
-/* --- MOBILE SPECIFIC OVERRIDES --- */
-@media (max-width: 768px) {
-    .container {
-        min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
-        margin: 0.5rem auto; /* Less vertical margin */
-        padding: 0 0.8rem; /* Less horizontal padding */
-        overflow-y: auto; /* Allow internal scrolling if content is too much for viewport */
-        display: flex;
-        flex-direction: column;
-    }
+.secondary-button:hover {
+    background-color: #5a6268;
+}
 
-    /* Controls always visible at the top */
-    .controls {
-        flex-shrink: 0; /* Don't allow controls to shrink */
-        padding: 0.8rem;
-        margin-bottom: 1rem;
-    }
+.calculator-results-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
 
-    /* Dynamic view heights */
-    #all-options-view,
-    #single-option-calculator-view {
-        flex-grow: 1; /* Allow these sections to take available space */
-        display: flex;
-        flex-direction: column;
-        padding: 0; /* Remove internal padding, let cards handle it */
-    }
+.calculator-results-section h3 {
+    text-align: center;
+    color: #28a745;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
 
-    /* Product options grid adapts */
-    .product-details-grid { /* This selector is now for the 'all options' grid */
-        flex-grow: 1;
-        overflow-y: auto; /* Allow scrolling within the options grid if many options */
-        max-height: calc(100vh - 350px); /* Adjust based on header, controls, footer approx height */
-        padding-top: 0.5rem; /* Add some top padding */
-        padding-bottom: 0.5rem; /* Add some bottom padding */
-    }
+.calculator-results-section p {
+    font-size: 1.1rem;
+    color: #444;
+    text-align: center;
+    margin: 10px 0;
+}
 
-    /* Individual product cards within the grid */
-    .product-details-grid .product-card {
-        padding: 0.6rem 0.8rem;
-        margin-bottom: 0.6rem;
-        font-size: 0.9rem;
-    }
+.calculator-results-section p strong {
+    color: #007bff;
+}
 
-    .product-details-grid .product-card h4 {
-        font-size: 1rem;
-    }
+.no-ncd-message {
+    text-align: center;
+    padding: 30px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 8px;
+}
 
-    .product-details-grid .product-card p {
-        font-size: 0.8rem;
-    }
+.no-ncd-message p {
+    font-size: 1.2rem;
+    color: #856404;
+}
 
-    /* Selected product detail and calculator */
-    #selected-product-detail-card {
-        flex-shrink: 0; /* Don't allow it to shrink */
-        padding: 1rem;
-        margin-bottom: 0.5rem;
-    }
-    #selected-product-detail-card h4 {
-        font-size: 1.1rem;
-        padding-bottom: 0.3rem;
-        margin-bottom: 0.5rem;
-    }
-    #selected-product-detail-card p {
-        font-size: 0.9rem;
-    }
-    #selected-product-detail-card .closure-table {
-        font-size: 0.65em;
-        padding: 0.2rem;
-    }
+.error-text {
+    color: #dc3545 !important;
+    font-weight: bold;
+}
 
-    .calculator-area {
-        flex-grow: 1; /* Allow calculator to take remaining space */
-        overflow-y: auto; /* Allow calculator results to scroll if needed */
-        padding: 1rem;
-    }
+.invalid-input {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5) !important;
+}
 
-    .action-button {
-        padding: 0.8rem 1rem;
-        font-size: 1rem;
-        margin-top: 0.8rem;
-        margin-bottom: 0.8rem;
-    }
+/* New styles for the RD return table (Request #4) */
+.rd-returns-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 1rem;
+    text-align: center;
+}
 
-    .display-area h2, #single-option-calculator-view h2 {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-    .display-area h3, #single-option-calculator-view h3 {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
+.rd-returns-table th,
+.rd-returns-table td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+}
 
-    /* Remove go to calculator link behavior on mobile */
-    .main-nav a[href="#calculator-area"] {
-        display: none; /* Hide this link on mobile */
-    }
+.rd-returns-table thead {
+    background-color: #007bff;
+    color: #fff;
+}
 
-    footer {
-        padding: 0.5rem 0;
-        font-size: 0.8rem;
-    }
+.rd-returns-table thead th {
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
-    /* Adjust placeholder text for mobile */
-    .placeholder-text {
-        margin-top: 20px;
-        font-size: 1rem;
-    }
+.rd-returns-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Light grey for even rows */
+}
 
-    /* Mobile navigation adjustments */
-    .main-nav ul {
-        flex-direction: column; /* Stack nav items vertically */
-        align-items: stretch; /* Stretch to full width */
-        gap: 0.5rem; /* Reduce gap */
-        margin: 0 1rem; /* Add some side margin */
-    }
+.rd-returns-table tbody tr:hover {
+    background-color: #e2e6ea; /* Highlight row on hover */
+}
 
-    .main-nav li {
-        width: auto; /* Allow list items to determine their width */
-    }
-
-    .main-nav a, .dropbtn {
-        width: 100%; /* Make buttons full width */
-        text-align: center;
-        padding: 0.6rem 0.8rem; /* Adjust padding */
-        font-size: 0.95rem; /* Slightly smaller font */
-        box-shadow: none; /* Remove shadows on mobile nav for flatter look */
-    }
-
-    .dropdown-content {
-        position: static; /* Stack dropdown items normally on mobile */
-        transform: none;
-        box-shadow: none;
-        border-radius: 0;
-        margin-top: 0;
-        min-width: unset;
-        background-color: var(--hover-light); /* Slight background for mobile dropdown items */
-        border-top: 1px solid var(--border-light); /* Separator */
-        border-bottom: 1px solid var(--border-light);
-    }
-    .dropdown-content a {
-        background-color: transparent; /* Reset background */
-        margin: 0; /* Remove margin from items */
-        padding: 10px 15px; /* Adjust padding for dropdown items */
-        border-bottom: 1px solid var(--border-light); /* Separator */
-    }
-    .dropdown-content a:last-child {
-        border-bottom: none;
-    }
+.summary-results {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #eaf4f1;
+    border-radius: 8px;
+    text-align: center;
 }
