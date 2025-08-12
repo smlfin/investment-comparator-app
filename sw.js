@@ -1,4 +1,4 @@
-const CACHE_NAME = 'investment-comparator-v48'; // NEW VERSION (must match script.js)
+const CACHE_NAME = 'investment-comparator-v29'; // NEW VERSION (must match script.js)
 const urlsToCache = [
   './',
   './index.html',
@@ -15,10 +15,9 @@ const urlsToCache = [
   './icons/icon-384x384.png',
   './icons/icon-512x512.png',
   // Add image paths for service worker cache
-  './images/sml.jpeg',
-  './images/vfl.jpeg',
-  './images/snl.jpeg',
-  './images/default.jpeg' // Ensure default image is cached
+  './images/sml.jpeg', // Changed from .png
+  './images/vfl.jpeg', // Changed from .png
+  './images/snl.jpeg'  // Changed from .png
 ];
 
 self.addEventListener('install', (event) => {
