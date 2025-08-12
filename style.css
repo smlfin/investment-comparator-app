@@ -282,17 +282,14 @@ header p {
     background-color: #f7fcff; /* Lighter background for the selected card */
     margin-bottom: 25px;
 }
-
 #single-option-calculator-view #selected-product-detail-card:hover {
     transform: none; /* No hover effect on the displayed card */
     border-color: #e0e0e0;
 }
-
 #single-option-calculator-view #selected-product-detail-card h4 {
     font-size: 1.5rem;
     margin-bottom: 15px;
 }
-
 #single-option-calculator-view #selected-product-detail-card p {
     font-size: 1.1rem;
     line-height: 1.8;
@@ -309,110 +306,277 @@ header p {
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .action-button:hover {
     background-color: #218838;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
-.action-button:active {
-    transform: translateY(1px);
-}
-
-.secondary-button {
-    background-color: #6c757d;
-}
-
-.secondary-button:hover {
-    background-color: #5a6268;
-}
-
-.calculator-results-section {
+/* Calculator Area */
+.calculator-area {
     margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #e0e0e0;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.calculator-results-section h3 {
+.calculator-area h2 {
     text-align: center;
-    color: #28a745;
-    font-size: 1.8rem;
+    color: #007bff;
     margin-bottom: 20px;
 }
 
-.calculator-results-section p {
+.calculator-controls .control-group {
+    flex: none; /* Override flex for calculator specific control */
+    width: 100%;
+    max-width: 400px; /* Keep input from stretching too wide */
+    margin: 0 auto 20px; /* Center and add bottom margin */
+}
+
+.calculator-controls input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     font-size: 1.1rem;
-    color: #444;
     text-align: center;
-    margin: 10px 0;
 }
 
-.calculator-results-section p strong {
-    color: #007bff;
+.calculator-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    padding-top: 15px;
 }
 
-.no-ncd-message {
-    text-align: center;
-    padding: 30px;
-    background-color: #fff3cd;
-    border: 1px solid #ffeeba;
+.calculator-result-card {
+    background-color: #e9f7ef; /* Light green background */
+    border: 1px solid #d4edda;
     border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
-.no-ncd-message p {
-    font-size: 1.2rem;
-    color: #856404;
+.calculator-result-card h4 {
+    color: #28a745; /* Green for headings */
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
 }
 
-.error-text {
-    color: #dc3545 !important;
+.calculator-result-card p {
+    font-size: 1.5rem;
     font-weight: bold;
+    color: #0056b3; /* Darker blue for numbers */
+    margin: 0;
 }
 
-.invalid-input {
-    border-color: #dc3545 !important;
-    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5) !important;
+.calculator-result-card p.small-text {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: normal;
 }
 
-/* New styles for the RD return table (Request #4) */
-.rd-returns-table {
+.calculator-result-card.highlight {
+    background-color: #d4edda; /* Darker green for highlight */
+    border-color: #28a745;
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.1);
+}
+
+.calculator-result-card.highlight p {
+    font-size: 2rem;
+    color: #003e80;
+}
+
+/* New: Styles for RD maturity table */
+.maturity-table-container {
+    max-width: 100%;
+    overflow-x: auto; /* Allows horizontal scrolling for table on small screens */
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.maturity-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 1rem;
-    text-align: center;
+    margin: 0 auto;
+    background-color: #fff;
+    font-size: 0.95rem;
 }
 
-.rd-returns-table th,
-.rd-returns-table td {
-    padding: 12px 15px;
+.maturity-table th, .maturity-table td {
     border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    text-align: left;
 }
 
-.rd-returns-table thead {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.rd-returns-table thead th {
+.maturity-table th {
+    background-color: #f2f2f2;
     font-weight: bold;
-    text-transform: uppercase;
+    color: #333;
+    position: sticky; /* Keeps header visible on scroll */
+    top: 0;
+    z-index: 1;
 }
 
-.rd-returns-table tbody tr:nth-child(even) {
-    background-color: #f8f9fa; /* Light grey for even rows */
+.maturity-table tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
 }
 
-.rd-returns-table tbody tr:hover {
-    background-color: #e2e6ea; /* Highlight row on hover */
+.maturity-table tbody tr:hover {
+    background-color: #eef8ff;
 }
 
-.summary-results {
-    margin-top: 25px;
-    padding: 15px;
-    background-color: #eaf4f1;
-    border-radius: 8px;
+
+/* Footer */
+footer {
     text-align: center;
+    padding: 1.2rem;
+    background-color: #333;
+    color: #eee;
+    font-size: 0.9rem;
+    margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 0;
+        margin-top: 0.5rem;
+    }
+
+    .main-nav li {
+        width: 100%;
+    }
+
+    .main-nav a, .dropbtn {
+        padding: 10px 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    .dropdown-content {
+        position: static; /* Stack dropdown items normally */
+        box-shadow: none;
+        background-color: transparent;
+        border-radius: 0;
+        min-width: unset;
+        width: 100%;
+    }
+
+    .dropdown-content a {
+        padding: 8px 15px;
+        background-color: rgba(255, 255, 255, 0.1); /* Slightly visible background for sub-items */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: #fff;
+    }
+    .dropdown-content a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    .dropdown:hover .dropdown-arrow {
+        transform: rotate(45deg); /* Keep arrow pointing down for mobile dropdown (no hover) */
+    }
+
+    .container {
+        width: 95%;
+        margin: 15px auto;
+        padding: 15px;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 15px; /* Smaller gap between control groups */
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .control-group {
+        min-width: unset; /* Remove min-width to allow full flexibility */
+        margin-bottom: 0.8rem; /* Refined vertical spacing */
+    }
+    .control-group label {
+        margin-bottom: 0.4rem; /* Smaller margin for labels */
+    }
+    .control-group select,
+    .control-group input[type="number"] {
+        padding: 10px; /* Reduced padding for inputs */
+        font-size: 0.95rem; /* Slightly smaller font for inputs */
+    }
+
+    .display-area {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .display-area h2, .display-area h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+    .display-area h3 {
+        font-size: 1.2rem;
+    }
+
+    .product-details-grid {
+        grid-template-columns: 1fr; /* Force single column on mobile */
+        gap: 15px; /* Smaller gap between product cards */
+    }
+
+    .product-card {
+        padding: 15px;
+    }
+
+    .product-card h4 {
+        font-size: 1.2rem;
+    }
+    .product-card p {
+        font-size: 0.9rem;
+    }
+
+    .action-button {
+        width: 100%; /* Make button full width on mobile */
+        padding: 10px 15px;
+        font-size: 0.95rem;
+        margin-top: 15px; /* Adjust spacing around the button */
+    }
+
+    .calculator-area {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .calculator-results-grid {
+        grid-template-columns: 1fr; /* Force single column for calculator results */
+        gap: 10px; /* Smaller gap between result cards */
+    }
+
+    .calculator-result-card h4 {
+        font-size: 1rem;
+    }
+
+    .calculator-result-card p {
+        font-size: 1.4rem; /* Adjust result font size for mobile */
+    }
+
+    .calculator-result-card.highlight p {
+        font-size: 1.8rem; /* Highlighted result font size for mobile */
+    }
+
+    .maturity-table th, .maturity-table td {
+        padding: 10px; /* Smaller padding for table cells */
+        font-size: 0.85rem; /* Smaller font for table content */
+    }
 }

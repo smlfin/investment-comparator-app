@@ -47,54 +47,55 @@
                 <label for="company-select">Select Company:</label>
                 <select id="company-select">
                     <option value="">-- Please select a company --</option>
-                </select>
+                    <option value="SML Finance Ltd">SML Finance Ltd</option>
+                    <option value="Vanchinad Finance (P) Ltd">Vanchinad Finance (P) Ltd</option>
+                    <option value="SANGEETH NIDHI">SANGEETH NIDHI</option>
+                    <option value="Special Calculators">Special Calculators</option> </select>
             </div>
+
             <div class="control-group">
                 <label for="product-select">Select Product Type:</label>
                 <select id="product-select" disabled>
-                    <option value="">-- Please select a product type --</option>
+                    <option value="">-- Select a company first --</option>
                 </select>
             </div>
         </section>
 
         <section id="all-options-view" class="display-area">
-            <h2>Available Options for <span id="selected-company-name-all"></span> > <span id="selected-product-name-all"></span></h2>
+            <h2 id="selected-company-name-all"></h2>
+            <h3 id="selected-product-name-all"></h3>
             <div id="product-options-grid" class="product-details-grid">
                 <p class="placeholder-text">Select a company and a product type to view available options.</p>
             </div>
         </section>
 
         <section id="single-option-calculator-view" class="display-area hidden">
-            <h2 id="calculator-area">Calculator for <span id="selected-company-name-single"></span> > <span id="selected-product-name-single"></span></h2>
-            <div id="selected-product-detail-card" class="product-card">
-                <p class="placeholder-text">No option selected for detailed view.</p>
-            </div>
-            <div id="calculator-inputs" class="controls">
-                <div class="control-group">
-                    <label for="investment-amount">Investment Amount:</label>
-                    <input type="number" id="investment-amount" placeholder="Enter Amount (₹)" min="0">
-                </div>
-                <div id="period-input-group" class="control-group">
-                    <label for="investment-period">Period (in Years):</label>
-                    <input type="number" id="investment-period" placeholder="Enter Period" min="1" max="10">
-                </div>
-                <div id="rd-monthly-transfer-group" class="control-group hidden">
-                    <label for="rd-monthly-transfer-period">Transfer Monthly Interest to RD? (Period in Years)</label>
-                    <select id="rd-monthly-transfer-period">
-                        </select>
-                </div>
-            </div>
-            <button id="calculate-button" class="action-button">Calculate Returns</button>
+            <h2 id="selected-company-name-single"></h2>
+            <h3 id="selected-product-name-single"></h3>
 
-            <div id="calculator-results" class="calculator-results-section">
-                <p class="placeholder-text">Enter an amount and select a product option above to calculate returns.</p>
-            </div>
-            <button id="change-option-button" class="action-button secondary-button">Change Option</button>
+            <div id="selected-product-detail-card" class="product-card">
+                </div>
+
+            <button id="change-option-button" class="action-button">Change Option</button>
+
+            <section class="calculator-area" id="calculator-area">
+                <h2>Investment Calculator</h2>
+                <div class="calculator-controls">
+                    <div class="control-group">
+                        <label for="investment-amount">Investment Amount (₹):</label>
+                        <input type="number" id="investment-amount" placeholder="e.g., 10000" min="0">
+                    </div>
+                </div>
+
+                <div id="calculator-results" class="calculator-results-grid">
+                    <p class="placeholder-text">Enter an amount and select a product option above to calculate returns.</p>
+                </div>
+            </section>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Investment Dashboard. All Rights Reserved.</p>
+        <p>&copy; 2025 Investment Comparator. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
