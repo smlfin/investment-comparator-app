@@ -1,9 +1,5 @@
 // Increment CACHE_NAME for Service Worker update to force fresh load of ALL files
-<<<<<<< HEAD
 const CACHE_NAME = 'investment-comparator-v34'; // NEW VERSION with SD 5.5 Year extra amount correctly fixed
-=======
-const CACHE_NAME = 'investment-comparator-v29'; // NEW VERSION with corrected RD reinvestment formula
->>>>>>> 6ad3211ffbe59b25959f439d7cccab2ec3957681
 const urlsToCache = [
   './',
   './index.html',
@@ -774,17 +770,11 @@ function calculateInvestmentReturns() {
         // Add RD reinvestment calculation if applicable
         if (showRdReinvestment) {
              let rdMaturityContent = '';
-<<<<<<< HEAD
              let extraAmountContent = '';
             
             if (monthlyInterest === null || monthlyInterest < 1000) {
                  rdMaturityContent = '<p class="error-message">RD reinvestment 1000 or more</p>';
                  extraAmountContent = '<p class="error-message">RD reinvestment 1000 or more</p>';
-=======
-            
-            if (monthlyInterest === null || monthlyInterest < 1000) {
-                 rdMaturityContent = '<p class="error-message">RD reinvestment 1000 or more</p>';
->>>>>>> 6ad3211ffbe59b25959f439d7cccab2ec3957681
             } else {
                 const rdAnnualRate = 12.12;
                 const r = rdAnnualRate / 400; // Rate per quarter
@@ -805,7 +795,6 @@ function calculateInvestmentReturns() {
                     rdMaturityAmount = P * (numerator / denominator);
                 }
 
-<<<<<<< HEAD
                 let totalReinvestmentMaturity;
                 let extraAmountFromRd;
 
@@ -828,18 +817,6 @@ function calculateInvestmentReturns() {
 
                 rdMaturityContent = `<p>₹ ${Math.round(totalReinvestmentMaturity).toLocaleString('en-IN')}</p>`;
                 extraAmountContent = `<p>₹ ${Math.round(extraAmountFromRd).toLocaleString('en-IN')}</p>`;
-=======
-                // Special handling for SD 5.5 Year (66 months)
-                if (isSDProduct && selectedYears === 5.5) {
-                    const remainingMonths = totalMonths - rdReinvestmentMonths;
-                    const remainingInterest = monthlyInterest * remainingMonths;
-                    rdMaturityAmount += remainingInterest;
-                }
-
-                const totalReinvestmentMaturity = amount + rdMaturityAmount;
-
-                rdMaturityContent = `<p>₹ ${Math.round(totalReinvestmentMaturity).toLocaleString('en-IN')}</p>`;
->>>>>>> 6ad3211ffbe59b25959f439d7cccab2ec3957681
             }
 
             resultsHTML += `
@@ -847,13 +824,10 @@ function calculateInvestmentReturns() {
                     <h4>Total Maturity (RD Reinvestment)</h4>
                     ${rdMaturityContent}
                 </div>
-<<<<<<< HEAD
                 <div class="calculator-result-card highlight">
                     <h4>Extra Amount from RD Reinvestment</h4>
                     ${extraAmountContent}
                 </div>
-=======
->>>>>>> 6ad3211ffbe59b25959f439d7cccab2ec3957681
             `;
         }
 
@@ -899,8 +873,4 @@ goToCalculatorLink.addEventListener('click', function (e) {
 
 // Initial state
 populateCompanySelect();
-<<<<<<< HEAD
 showAllOptionsView();
-=======
-showAllOptionsView();
->>>>>>> 6ad3211ffbe59b25959f439d7cccab2ec3957681
