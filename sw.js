@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const CACHE_NAME = 'investment-comparator-v34'; // NEW VERSION (must match script.js)
+=======
+const CACHE_NAME = 'investment-comparator-v29'; // NEW VERSION (must match script.js)
+>>>>>>> 6ad3211ffbe59b25959f439d7cccab2ec3957681
 const urlsToCache = [
   './',
   './index.html',
